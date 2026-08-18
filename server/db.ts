@@ -37,8 +37,10 @@ interface DatabaseSchema {
   platform_knowledge_base?: PlatformKnowledgeItem[];
 }
 
-const DB_DIR = path.join(process.cwd(), 'data');
+const IS_VERCEL = Boolean(process.env.VERCEL);
+const DB_DIR = IS_VERCEL ? path.join('/tmp', 'data') : path.join(process.cwd(), 'data');
 const DB_FILE = path.join(DB_DIR, 'clinicfirst.json');
+const SOURCE_DB_FILE = path.join(process.cwd(), 'data', 'clinicfirst.json');
 
 // Helper to hash password using Node crypto scrypt
 export function hashPassword(password: string): string {
@@ -343,6 +345,16 @@ class DatabaseEngine {
   }
 
   private loadDatabase(): DatabaseSchema {
+    if (IS_VERCEL && !fs.existsSync(DB_FILE) && fs.existsSync(SOURCE_DB_FILE)) {
+      try {
+        this.ensureDirectory();
+        const initialRaw = fs.readFileSync(SOURCE_DB_FILE, 'utf-8');
+        fs.writeFileSync(DB_FILE, initialRaw, 'utf-8');
+      } catch (e) {
+        console.warn('Could not copy initial data to /tmp:', e);
+      }
+    }
+
     if (fs.existsSync(DB_FILE)) {
       try {
         const raw = fs.readFileSync(DB_FILE, 'utf-8');
@@ -352,6 +364,15 @@ class DatabaseEngine {
         return enriched;
       } catch (err) {
         console.error('Error reading database file, initializing seeds...', err);
+      }
+    } else if (fs.existsSync(SOURCE_DB_FILE)) {
+      try {
+        const raw = fs.readFileSync(SOURCE_DB_FILE, 'utf-8');
+        const parsed = JSON.parse(raw);
+        const enriched = this.ensureSeedUsers(parsed);
+        return enriched;
+      } catch (err) {
+        console.error('Error reading source database file:', err);
       }
     }
 
@@ -363,9 +384,10 @@ class DatabaseEngine {
   private saveDatabase(dataToSave?: DatabaseSchema) {
     const payload = dataToSave || this.data;
     try {
+      this.ensureDirectory();
       fs.writeFileSync(DB_FILE, JSON.stringify(payload, null, 2), 'utf-8');
     } catch (err) {
-      console.error('Failed to write database file:', err);
+      console.warn('Database write to disk skipped or unavailable:', err);
     }
   }
 
