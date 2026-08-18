@@ -1,0 +1,1136 @@
+{
+  "clinics": [
+    {
+      "id": "clinic_apex_101",
+      "name": "Apex Cardiology & Family Medicine",
+      "address": "742 Evergreen Terrace, Medical Suite 300",
+      "phone": "+1-555-019-2000",
+      "email": "contact@apexclinic.com",
+      "website": "https://apexclinic.example.com",
+      "city": "Seattle, WA",
+      "timezone": "America/Los_Angeles",
+      "status": "ACTIVE",
+      "created_at": "2026-08-18T12:20:12.993Z",
+      "operating_hours": {
+        "monday": {
+          "open": "08:30",
+          "close": "17:30",
+          "closed": false
+        },
+        "tuesday": {
+          "open": "08:30",
+          "close": "17:30",
+          "closed": false
+        },
+        "wednesday": {
+          "open": "08:30",
+          "close": "17:30",
+          "closed": false
+        },
+        "thursday": {
+          "open": "08:30",
+          "close": "17:30",
+          "closed": false
+        },
+        "friday": {
+          "open": "08:30",
+          "close": "17:00",
+          "closed": false
+        },
+        "saturday": {
+          "open": "09:00",
+          "close": "13:00",
+          "closed": false
+        },
+        "sunday": {
+          "open": "09:00",
+          "close": "13:00",
+          "closed": true
+        }
+      },
+      "currency": "INR",
+      "currency_symbol": "₹"
+    }
+  ],
+  "users": [
+    {
+      "id": "usr_platform_admin_1",
+      "clinic_id": null,
+      "role": "PLATFORM_ADMIN",
+      "name": "System Owner",
+      "email": "admin@clinicfirst.internal",
+      "phone": "+1-555-010-0001",
+      "status": "ACTIVE",
+      "must_change_password": false,
+      "created_at": "2026-08-18T12:20:12.993Z",
+      "password_hash": "9721c6364fb969d126a978399f4e195f:07370dca7b29203bee00e86c18249d42a0aa62eb24ca7c497b44040764f8d314f03b6cf23e46a873c772ca4e5719bffb1228ff7ba2081cafd9639497016f0535"
+    },
+    {
+      "id": "usr_apex_admin_legacy",
+      "clinic_id": "clinic_apex_101",
+      "role": "CLINIC_ADMIN",
+      "name": "Dr. Arthur Pendelton",
+      "email": "admin@apexclinic.com",
+      "phone": "+1-555-019-2001",
+      "status": "ACTIVE",
+      "must_change_password": false,
+      "created_at": "2026-08-18T12:20:12.993Z",
+      "password_hash": "c2b6580c25ce8cdc4b71caa50b3df3a1:2eb91303d52246bc36f2413418c75cd242be2eda8fe6f72af23abdc0ad838c73e5b05bb4f72e5459b82ebe1bed2f3b0d390da9e7a55ac42d3fa537dc25481d3c"
+    },
+    {
+      "id": "usr_apex_staff_legacy",
+      "clinic_id": "clinic_apex_101",
+      "role": "CLINIC_STAFF",
+      "name": "Sarah Jenkins",
+      "email": "sarah.reception@apexclinic.com",
+      "phone": "+1-555-019-2002",
+      "status": "ACTIVE",
+      "must_change_password": false,
+      "created_at": "2026-08-18T12:20:12.993Z",
+      "password_hash": "e33e5a08a619fd7620a3a5372c82a11c:b9ed4cbde3fbeca49bd3b2156a0ff47ee17f256ca525393c3375143b60d43e88a5a67b37458efe87caa7877af72df233114ffc9d2ec964e83cb249d4af4f1d4f"
+    },
+    {
+      "id": "usr_platform_admin_2",
+      "clinic_id": null,
+      "role": "PLATFORM_ADMIN",
+      "name": "Platform Administrator",
+      "email": "admin@clinicfirst.ai",
+      "phone": "+1-555-010-0002",
+      "status": "ACTIVE",
+      "must_change_password": false,
+      "created_at": "2026-08-18T12:25:43.486Z",
+      "password_hash": "76d3508cb737be92acf35dfaed04cb25:b146c53c6794a4ab20a7dfbe04ef00f21d094c4562a2d86396bcfd68eafc7359bce8e1d112b195a33cacaf642e0f8be356c0f2f37687987f3323bd495e62095b"
+    },
+    {
+      "id": "usr_apex_admin_1",
+      "clinic_id": "clinic_apex_101",
+      "role": "CLINIC_ADMIN",
+      "name": "Dr. Arthur Pendelton",
+      "email": "admin@apexcardiology.com",
+      "phone": "+1-555-019-2001",
+      "status": "ACTIVE",
+      "must_change_password": false,
+      "created_at": "2026-08-18T12:25:43.486Z",
+      "password_hash": "add7cb56da94e5b685059a8512b3a9c0:78aa6e213bb69e246e2ae425ab53db48df169470063e353ddea8f75cdc1ad06ab7e5a7de284c1b9a5951a9dfe84797544fa4911950001c0130ad7c4f1b8594c4"
+    },
+    {
+      "id": "usr_apex_staff_1",
+      "clinic_id": "clinic_apex_101",
+      "role": "CLINIC_STAFF",
+      "name": "Sarah Jenkins",
+      "email": "reception@apexcardiology.com",
+      "phone": "+1-555-019-2002",
+      "status": "ACTIVE",
+      "must_change_password": false,
+      "created_at": "2026-08-18T12:25:43.486Z",
+      "password_hash": "fd0aec79abef6de467cc9653c72f35bf:6546e109d93aa44c4f203d4595bc6e9aaf055415035177ca8b6fa3273a6a722a0cd0a20c2fde512a22d103d9ced5c0e0a94226f7d7a5f5e9ce2d3a133fb4127e"
+    }
+  ],
+  "doctors": [
+    {
+      "id": "doc_elena_1",
+      "clinic_id": "clinic_apex_101",
+      "name": "Dr. Elena Vance",
+      "specialization": "Cardiology & Heart Health",
+      "qualification": "MD, FACC - Harvard Medical",
+      "phone": "+1-555-019-2101",
+      "email": "elena.vance@apexclinic.com",
+      "consultation_duration_minutes": 30,
+      "status": "ACTIVE",
+      "created_at": "2026-08-18T12:20:12.993Z"
+    },
+    {
+      "id": "doc_marcus_2",
+      "clinic_id": "clinic_apex_101",
+      "name": "Dr. Marcus Chen",
+      "specialization": "Internal Medicine & Preventative Care",
+      "qualification": "MD - Johns Hopkins",
+      "phone": "+1-555-019-2102",
+      "email": "marcus.chen@apexclinic.com",
+      "consultation_duration_minutes": 20,
+      "status": "ACTIVE",
+      "created_at": "2026-08-18T12:20:12.993Z"
+    },
+    {
+      "id": "doc_priya_3",
+      "clinic_id": "clinic_apex_101",
+      "name": "Dr. Priya Sharma",
+      "specialization": "Pediatrics & Family Medicine",
+      "qualification": "MBBS, DCH - Stanford Health",
+      "phone": "+1-555-019-2103",
+      "email": "priya.sharma@apexclinic.com",
+      "consultation_duration_minutes": 30,
+      "status": "ACTIVE",
+      "created_at": "2026-08-18T12:20:12.993Z"
+    },
+    {
+      "id": "doc_1787056842783_n1ws",
+      "clinic_id": "clinic_apex_101",
+      "name": "Dr. Prateek",
+      "specialization": "Cardiology",
+      "qualification": "MD",
+      "phone": "",
+      "email": "prateekd.tech@gmail.com",
+      "consultation_duration_minutes": 30,
+      "status": "ACTIVE",
+      "created_at": "2026-08-18T12:40:42.783Z"
+    }
+  ],
+  "doctor_schedules": [
+    {
+      "id": "sched_doc_elena_1_day_1",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_elena_1",
+      "day_of_week": 1,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_elena_1_day_2",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_elena_1",
+      "day_of_week": 2,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_elena_1_day_3",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_elena_1",
+      "day_of_week": 3,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_elena_1_day_4",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_elena_1",
+      "day_of_week": 4,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_elena_1_day_5",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_elena_1",
+      "day_of_week": 5,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_marcus_2_day_1",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_marcus_2",
+      "day_of_week": 1,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_marcus_2_day_2",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_marcus_2",
+      "day_of_week": 2,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_marcus_2_day_3",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_marcus_2",
+      "day_of_week": 3,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_marcus_2_day_4",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_marcus_2",
+      "day_of_week": 4,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_marcus_2_day_5",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_marcus_2",
+      "day_of_week": 5,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_priya_3_day_1",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_priya_3",
+      "day_of_week": 1,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_priya_3_day_2",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_priya_3",
+      "day_of_week": 2,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_priya_3_day_3",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_priya_3",
+      "day_of_week": 3,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_priya_3_day_4",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_priya_3",
+      "day_of_week": 4,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_priya_3_day_5",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_priya_3",
+      "day_of_week": 5,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_1787056842783_n1ws_day_1",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_1787056842783_n1ws",
+      "day_of_week": 1,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_1787056842783_n1ws_day_2",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_1787056842783_n1ws",
+      "day_of_week": 2,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_1787056842783_n1ws_day_3",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_1787056842783_n1ws",
+      "day_of_week": 3,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_1787056842783_n1ws_day_4",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_1787056842783_n1ws",
+      "day_of_week": 4,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    },
+    {
+      "id": "sched_doc_1787056842783_n1ws_day_5",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_1787056842783_n1ws",
+      "day_of_week": 5,
+      "start_time": "09:00",
+      "end_time": "17:00",
+      "break_start": "13:00",
+      "break_end": "14:00",
+      "buffer_minutes": 5
+    }
+  ],
+  "doctor_leaves": [
+    {
+      "id": "leave_1787057241099_8f97",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_1787056842783_n1ws",
+      "start_date": "2026-08-18",
+      "end_date": "2026-08-20",
+      "reason": "Medical Conference / Scheduled Leave"
+    }
+  ],
+  "services": [
+    {
+      "id": "srv_cardiac_eval_1",
+      "clinic_id": "clinic_apex_101",
+      "name": "Comprehensive Cardiac Evaluation",
+      "duration_minutes": 30,
+      "fee": 160,
+      "status": "ACTIVE",
+      "assigned_doctor_ids": [
+        "doc_elena_1"
+      ]
+    },
+    {
+      "id": "srv_general_consult_2",
+      "clinic_id": "clinic_apex_101",
+      "name": "General Health Consultation",
+      "duration_minutes": 20,
+      "fee": 85,
+      "status": "ACTIVE",
+      "assigned_doctor_ids": [
+        "doc_marcus_2",
+        "doc_elena_1"
+      ]
+    },
+    {
+      "id": "srv_ecg_3",
+      "clinic_id": "clinic_apex_101",
+      "name": "ECG & Vital Signs Diagnostic",
+      "duration_minutes": 20,
+      "fee": 110,
+      "status": "ACTIVE",
+      "assigned_doctor_ids": [
+        "doc_elena_1",
+        "doc_marcus_2"
+      ]
+    },
+    {
+      "id": "srv_pediatric_check_4",
+      "clinic_id": "clinic_apex_101",
+      "name": "Pediatric Wellness Checkup",
+      "duration_minutes": 30,
+      "fee": 95,
+      "status": "ACTIVE",
+      "assigned_doctor_ids": [
+        "doc_priya_3"
+      ]
+    }
+  ],
+  "doctor_services": [
+    {
+      "id": "ds_1",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_elena_1",
+      "service_id": "srv_cardiac_eval_1"
+    },
+    {
+      "id": "ds_2",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_marcus_2",
+      "service_id": "srv_general_consult_2"
+    },
+    {
+      "id": "ds_3",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_elena_1",
+      "service_id": "srv_ecg_3"
+    },
+    {
+      "id": "ds_4",
+      "clinic_id": "clinic_apex_101",
+      "doctor_id": "doc_priya_3",
+      "service_id": "srv_pediatric_check_4"
+    }
+  ],
+  "patients": [
+    {
+      "id": "pat_miller_1",
+      "clinic_id": "clinic_apex_101",
+      "name": "Jonathan Miller",
+      "phone": "+1-555-019-2834",
+      "email": "jonathan.miller@example.com",
+      "dob": "1984-06-12",
+      "gender": "Male",
+      "preferred_language": "English",
+      "notes": "Hypertension history. Takes daily Lisinopril.",
+      "created_at": "2026-08-18T12:20:12.993Z"
+    },
+    {
+      "id": "pat_rodriguez_2",
+      "clinic_id": "clinic_apex_101",
+      "name": "Maria Rodriguez",
+      "phone": "+1-555-014-9982",
+      "email": "maria.rodriguez@example.com",
+      "dob": "1991-11-23",
+      "gender": "Female",
+      "preferred_language": "English",
+      "notes": "Seasonal allergies. Regular annual checkup patient.",
+      "created_at": "2026-08-18T12:20:12.993Z"
+    },
+    {
+      "id": "pat_sterling_3",
+      "clinic_id": "clinic_apex_101",
+      "name": "David Sterling",
+      "phone": "+1-555-017-4431",
+      "email": "david.sterling@example.com",
+      "dob": "1976-03-05",
+      "gender": "Male",
+      "preferred_language": "English",
+      "notes": "Follow-up for post-cardiac stent monitoring.",
+      "created_at": "2026-08-18T12:20:12.993Z"
+    }
+  ],
+  "appointments": [
+    {
+      "id": "apt_seed_1",
+      "clinic_id": "clinic_apex_101",
+      "patient_id": "pat_miller_1",
+      "doctor_id": "doc_elena_1",
+      "service_id": "srv_cardiac_eval_1",
+      "date": "2026-08-18",
+      "start_time": "10:00",
+      "end_time": "10:30",
+      "status": "CONFIRMED",
+      "created_via": "ai_receptionist",
+      "notes": "Routine quarterly cardiac evaluation booked via AI Receptionist phone call.",
+      "created_at": "2026-08-18T12:20:12.993Z",
+      "updated_at": "2026-08-18T12:20:12.993Z"
+    },
+    {
+      "id": "apt_seed_2",
+      "clinic_id": "clinic_apex_101",
+      "patient_id": "pat_rodriguez_2",
+      "doctor_id": "doc_marcus_2",
+      "service_id": "srv_general_consult_2",
+      "date": "2026-08-18",
+      "start_time": "11:00",
+      "end_time": "11:20",
+      "status": "CONFIRMED",
+      "created_via": "staff",
+      "notes": "Scheduled at clinic reception front desk.",
+      "created_at": "2026-08-18T12:20:12.993Z",
+      "updated_at": "2026-08-18T12:20:12.993Z"
+    }
+  ],
+  "ai_agents": [
+    {
+      "id": "agent_apex_1",
+      "clinic_id": "clinic_apex_101",
+      "name": "Ava",
+      "greeting": "Thank you for calling Apex Cardiology & Family Medicine. My name is Ava, the clinic AI receptionist. How may I assist you with booking, rescheduling, or clinic information today?",
+      "voice_provider": "gemini_live",
+      "voice_config": {
+        "voice_name": "Zephyr",
+        "temperature": 0.2
+      },
+      "languages": [
+        "English",
+        "Spanish"
+      ],
+      "status": "ACTIVE",
+      "escalation_contact": {
+        "name": "Urgent Care & Reception Triage",
+        "phone": "+1-555-019-2099",
+        "email": "urgent@apexclinic.com"
+      },
+      "instructions_note": "Apex Cardiology is open Mon-Fri 8:30 AM to 5:30 PM. For chest pain or sudden shortness of breath, immediately advise dialing 911 or escalate. Do not prescribe medications."
+    }
+  ],
+  "calls": [
+    {
+      "id": "call_seed_1",
+      "clinic_id": "clinic_apex_101",
+      "patient_id": "pat_miller_1",
+      "agent_id": "agent_apex_1",
+      "doctor_id": "doc_elena_1",
+      "service_id": "srv_cardiac_eval_1",
+      "appointment_id": "apt_seed_1",
+      "direction": "inbound",
+      "start_time": "2026-08-18T12:20:12.993Z",
+      "duration_seconds": 114,
+      "status": "completed",
+      "summary": "Patient Jonathan Miller called to book a cardiac follow-up with Dr. Elena Vance. AI identified patient by phone, verified availability, offered slots, and booked for today at 10:00 AM.",
+      "outcome": "APPOINTMENT_BOOKED",
+      "transcript": [
+        {
+          "speaker": "ai",
+          "text": "Thank you for calling Apex Cardiology. My name is Ava. How can I assist you today?",
+          "timestamp": "00:00"
+        },
+        {
+          "speaker": "patient",
+          "text": "Hi Ava, I need to book a cardiac follow-up with Dr. Elena Vance.",
+          "timestamp": "00:06"
+        },
+        {
+          "speaker": "ai",
+          "text": "I would be happy to help with that. May I have your registered phone number or full name?",
+          "timestamp": "00:12"
+        },
+        {
+          "speaker": "patient",
+          "text": "My name is Jonathan Miller, phone 555-019-2834.",
+          "timestamp": "00:19"
+        },
+        {
+          "speaker": "ai",
+          "text": "Thank you, Mr. Miller. I see you in our records. Dr. Elena Vance has an opening today at 10:00 AM or tomorrow at 2:00 PM for a Comprehensive Cardiac Evaluation. Would 10:00 AM today suit you?",
+          "timestamp": "00:26"
+        },
+        {
+          "speaker": "patient",
+          "text": "Yes, 10:00 AM today works great.",
+          "timestamp": "00:39"
+        },
+        {
+          "speaker": "ai",
+          "text": "Splendid! I have confirmed your appointment with Dr. Elena Vance for today at 10:00 AM. We look forward to seeing you.",
+          "timestamp": "00:44"
+        }
+      ],
+      "language_detected": "English",
+      "created_at": "2026-08-18T12:20:12.993Z"
+    },
+    {
+      "id": "call_1787056622353_009c",
+      "clinic_id": "clinic_apex_101",
+      "agent_id": "agent_apex_1",
+      "direction": "inbound",
+      "start_time": "2026-08-18T12:37:02.353Z",
+      "duration_seconds": 51,
+      "status": "escalated",
+      "outcome": "ESCALATED",
+      "transcript": [
+        {
+          "speaker": "ai",
+          "text": "Thank you for calling Apex Cardiology & Family Medicine. My name is Ava, the clinic AI receptionist. How may I assist you with booking, rescheduling, or clinic information today?",
+          "timestamp": "00:00"
+        },
+        {
+          "speaker": "patient",
+          "text": "What are your clinic operating hours?",
+          "timestamp": "00:07"
+        },
+        {
+          "speaker": "ai",
+          "text": "Apex Cardiology & Family Medicine is open Monday through Friday from 8:30 AM to 5:30 PM, and Saturday mornings. Would you like to schedule a visit?",
+          "timestamp": "00:10"
+        },
+        {
+          "speaker": "patient",
+          "text": "I am having sudden acute chest pain and shortness of breath.",
+          "timestamp": "00:30"
+        },
+        {
+          "speaker": "ai",
+          "text": "If you are experiencing severe symptoms or chest pain, please dial 911 immediately. I have also alerted our emergency triage desk at +1-555-019-2099.",
+          "timestamp": "00:33"
+        }
+      ],
+      "language_detected": "English",
+      "created_at": "2026-08-18T12:37:02.353Z",
+      "escalation_id": "esc_1787056664283_62qu",
+      "end_time": "2026-08-18T12:37:54.085Z",
+      "summary": "Call completed (51s). Outcome: ESCALATED. 5 messages exchanged."
+    }
+  ],
+  "escalations": [
+    {
+      "id": "esc_1787056662065_uwka",
+      "clinic_id": "clinic_apex_101",
+      "call_id": "call_direct",
+      "reason": "Acute chest pain and shortness of breath",
+      "priority": "urgent",
+      "context_summary": "Patient reported sudden acute chest pain and shortness of breath. Immediate emergency response required.",
+      "status": "resolved",
+      "created_at": "2026-08-18T12:37:42.065Z",
+      "resolved_by": "Dr. Arthur Pendelton",
+      "resolved_at": "2026-08-18T12:38:11.986Z"
+    },
+    {
+      "id": "esc_1787056664283_62qu",
+      "clinic_id": "clinic_apex_101",
+      "call_id": "call_direct",
+      "reason": "Patient reported urgent symptoms",
+      "priority": "urgent",
+      "context_summary": "I am having sudden acute chest pain and shortness of breath.",
+      "status": "resolved",
+      "created_at": "2026-08-18T12:37:44.283Z",
+      "resolved_by": "Dr. Arthur Pendelton",
+      "resolved_at": "2026-08-18T12:38:09.742Z"
+    }
+  ],
+  "audit_logs": [
+    {
+      "clinic_id": null,
+      "actor_user_id": "usr_platform_admin_2",
+      "actor_name": "Platform Administrator",
+      "action": "PLATFORM_ADMIN_LOGIN",
+      "target_type": "USER",
+      "target_id": "usr_platform_admin_2",
+      "id": "audit_1787058416427_aqncb",
+      "created_at": "2026-08-18T13:06:56.427Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "CLINIC_USER_LOGIN",
+      "target_type": "USER",
+      "target_id": "usr_apex_admin_1",
+      "id": "audit_1787058287302_0l3i4",
+      "created_at": "2026-08-18T13:04:47.302Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_platform_admin_2",
+      "actor_name": "Platform Administrator",
+      "action": "CLINIC_UPDATED_BY_PLATFORM_ADMIN",
+      "target_type": "CLINIC",
+      "target_id": "clinic_apex_101",
+      "metadata": {
+        "currency": "INR",
+        "currency_symbol": "₹"
+      },
+      "id": "audit_1787058276600_zegh2",
+      "created_at": "2026-08-18T13:04:36.600Z"
+    },
+    {
+      "clinic_id": null,
+      "actor_user_id": "usr_platform_admin_2",
+      "actor_name": "Platform Administrator",
+      "action": "PLATFORM_ADMIN_LOGIN",
+      "target_type": "USER",
+      "target_id": "usr_platform_admin_2",
+      "id": "audit_1787058254623_jrqss",
+      "created_at": "2026-08-18T13:04:14.623Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "CLINIC_USER_LOGIN",
+      "target_type": "USER",
+      "target_id": "usr_apex_admin_1",
+      "id": "audit_1787057372846_bn8qc",
+      "created_at": "2026-08-18T12:49:32.846Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "SCHEDULE_UPDATED",
+      "target_type": "SCHEDULE",
+      "target_id": "sched_doc_1787056842783_n1ws_day_5",
+      "metadata": {
+        "id": "sched_doc_1787056842783_n1ws_day_5",
+        "clinic_id": "clinic_apex_101",
+        "doctor_id": "doc_1787056842783_n1ws",
+        "day_of_week": 5,
+        "start_time": "09:00",
+        "end_time": "17:00",
+        "break_start": "13:00",
+        "break_end": "14:00",
+        "buffer_minutes": 5
+      },
+      "id": "audit_1787057248097_er2pr",
+      "created_at": "2026-08-18T12:47:28.097Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "SCHEDULE_UPDATED",
+      "target_type": "SCHEDULE",
+      "target_id": "sched_doc_1787056842783_n1ws_day_4",
+      "metadata": {
+        "id": "sched_doc_1787056842783_n1ws_day_4",
+        "clinic_id": "clinic_apex_101",
+        "doctor_id": "doc_1787056842783_n1ws",
+        "day_of_week": 4,
+        "start_time": "09:00",
+        "end_time": "17:00",
+        "break_start": "13:00",
+        "break_end": "14:00",
+        "buffer_minutes": 5
+      },
+      "id": "audit_1787057247957_nhd0b",
+      "created_at": "2026-08-18T12:47:27.957Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "SCHEDULE_UPDATED",
+      "target_type": "SCHEDULE",
+      "target_id": "sched_doc_1787056842783_n1ws_day_3",
+      "metadata": {
+        "id": "sched_doc_1787056842783_n1ws_day_3",
+        "clinic_id": "clinic_apex_101",
+        "doctor_id": "doc_1787056842783_n1ws",
+        "day_of_week": 3,
+        "start_time": "09:00",
+        "end_time": "17:00",
+        "break_start": "13:00",
+        "break_end": "14:00",
+        "buffer_minutes": 5
+      },
+      "id": "audit_1787057247817_oebjz",
+      "created_at": "2026-08-18T12:47:27.817Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "SCHEDULE_UPDATED",
+      "target_type": "SCHEDULE",
+      "target_id": "sched_doc_1787056842783_n1ws_day_2",
+      "metadata": {
+        "id": "sched_doc_1787056842783_n1ws_day_2",
+        "clinic_id": "clinic_apex_101",
+        "doctor_id": "doc_1787056842783_n1ws",
+        "day_of_week": 2,
+        "start_time": "09:00",
+        "end_time": "17:00",
+        "break_start": "13:00",
+        "break_end": "14:00",
+        "buffer_minutes": 5
+      },
+      "id": "audit_1787057247696_8imej",
+      "created_at": "2026-08-18T12:47:27.696Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "SCHEDULE_UPDATED",
+      "target_type": "SCHEDULE",
+      "target_id": "sched_doc_1787056842783_n1ws_day_1",
+      "metadata": {
+        "id": "sched_doc_1787056842783_n1ws_day_1",
+        "clinic_id": "clinic_apex_101",
+        "doctor_id": "doc_1787056842783_n1ws",
+        "day_of_week": 1,
+        "start_time": "09:00",
+        "end_time": "17:00",
+        "break_start": "13:00",
+        "break_end": "14:00",
+        "buffer_minutes": 5
+      },
+      "id": "audit_1787057247515_6uhgf",
+      "created_at": "2026-08-18T12:47:27.515Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "DOCTOR_LEAVE_LOGGED",
+      "target_type": "LEAVE",
+      "target_id": "leave_1787057241099_8f97",
+      "metadata": {
+        "id": "leave_1787057241099_8f97",
+        "clinic_id": "clinic_apex_101",
+        "doctor_id": "doc_1787056842783_n1ws",
+        "start_date": "2026-08-18",
+        "end_date": "2026-08-20",
+        "reason": "Medical Conference / Scheduled Leave"
+      },
+      "id": "audit_1787057241099_owpw2",
+      "created_at": "2026-08-18T12:47:21.099Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "SCHEDULE_UPDATED",
+      "target_type": "SCHEDULE",
+      "target_id": "sched_doc_1787056842783_n1ws_day_5",
+      "metadata": {
+        "id": "sched_doc_1787056842783_n1ws_day_5",
+        "clinic_id": "clinic_apex_101",
+        "doctor_id": "doc_1787056842783_n1ws",
+        "day_of_week": 5,
+        "start_time": "09:00",
+        "end_time": "17:00",
+        "break_start": "13:00",
+        "break_end": "14:00",
+        "buffer_minutes": 5
+      },
+      "id": "audit_1787057232576_2ihcp",
+      "created_at": "2026-08-18T12:47:12.576Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "SCHEDULE_UPDATED",
+      "target_type": "SCHEDULE",
+      "target_id": "sched_doc_1787056842783_n1ws_day_4",
+      "metadata": {
+        "id": "sched_doc_1787056842783_n1ws_day_4",
+        "clinic_id": "clinic_apex_101",
+        "doctor_id": "doc_1787056842783_n1ws",
+        "day_of_week": 4,
+        "start_time": "09:00",
+        "end_time": "17:00",
+        "break_start": "13:00",
+        "break_end": "14:00",
+        "buffer_minutes": 5
+      },
+      "id": "audit_1787057232415_5abum",
+      "created_at": "2026-08-18T12:47:12.415Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "SCHEDULE_UPDATED",
+      "target_type": "SCHEDULE",
+      "target_id": "sched_doc_1787056842783_n1ws_day_3",
+      "metadata": {
+        "id": "sched_doc_1787056842783_n1ws_day_3",
+        "clinic_id": "clinic_apex_101",
+        "doctor_id": "doc_1787056842783_n1ws",
+        "day_of_week": 3,
+        "start_time": "09:00",
+        "end_time": "17:00",
+        "break_start": "13:00",
+        "break_end": "14:00",
+        "buffer_minutes": 5
+      },
+      "id": "audit_1787057232258_0fc1e",
+      "created_at": "2026-08-18T12:47:12.258Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "SCHEDULE_UPDATED",
+      "target_type": "SCHEDULE",
+      "target_id": "sched_doc_1787056842783_n1ws_day_2",
+      "metadata": {
+        "id": "sched_doc_1787056842783_n1ws_day_2",
+        "clinic_id": "clinic_apex_101",
+        "doctor_id": "doc_1787056842783_n1ws",
+        "day_of_week": 2,
+        "start_time": "09:00",
+        "end_time": "17:00",
+        "break_start": "13:00",
+        "break_end": "14:00",
+        "buffer_minutes": 5
+      },
+      "id": "audit_1787057232119_8mju6",
+      "created_at": "2026-08-18T12:47:12.119Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "SCHEDULE_UPDATED",
+      "target_type": "SCHEDULE",
+      "target_id": "sched_doc_1787056842783_n1ws_day_1",
+      "metadata": {
+        "id": "sched_doc_1787056842783_n1ws_day_1",
+        "clinic_id": "clinic_apex_101",
+        "doctor_id": "doc_1787056842783_n1ws",
+        "day_of_week": 1,
+        "start_time": "09:00",
+        "end_time": "17:00",
+        "break_start": "13:00",
+        "break_end": "14:00",
+        "buffer_minutes": 5
+      },
+      "id": "audit_1787057231989_smwb2",
+      "created_at": "2026-08-18T12:47:11.989Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "CLINIC_USER_LOGIN",
+      "target_type": "USER",
+      "target_id": "usr_apex_admin_1",
+      "id": "audit_1787057083443_bpc21",
+      "created_at": "2026-08-18T12:44:43.443Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "CLINIC_USER_LOGIN",
+      "target_type": "USER",
+      "target_id": "usr_apex_admin_1",
+      "id": "audit_1787056977306_6lde4",
+      "created_at": "2026-08-18T12:42:57.306Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "DOCTOR_CREATED",
+      "target_type": "DOCTOR",
+      "target_id": "doc_1787056842783_n1ws",
+      "metadata": {
+        "name": "Dr. Prateek",
+        "specialization": "Cardiology"
+      },
+      "id": "audit_1787056842785_lszy3",
+      "created_at": "2026-08-18T12:40:42.785Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "CLINIC_USER_LOGIN",
+      "target_type": "USER",
+      "target_id": "usr_apex_admin_1",
+      "id": "audit_1787056805606_2y8hv",
+      "created_at": "2026-08-18T12:40:05.606Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_staff_1",
+      "actor_name": "Sarah Jenkins",
+      "action": "CLINIC_USER_LOGIN",
+      "target_type": "USER",
+      "target_id": "usr_apex_staff_1",
+      "id": "audit_1787056788685_5oth3",
+      "created_at": "2026-08-18T12:39:48.685Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "CLINIC_USER_LOGIN",
+      "target_type": "USER",
+      "target_id": "usr_apex_admin_1",
+      "id": "audit_1787056775521_rypov",
+      "created_at": "2026-08-18T12:39:35.521Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "ESCALATION_RESOLVED",
+      "target_type": "ESCALATION",
+      "target_id": "esc_1787056662065_uwka",
+      "id": "audit_1787056691986_f1o40",
+      "created_at": "2026-08-18T12:38:11.986Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "ESCALATION_RESOLVED",
+      "target_type": "ESCALATION",
+      "target_id": "esc_1787056664283_62qu",
+      "id": "audit_1787056689742_064uy",
+      "created_at": "2026-08-18T12:38:09.742Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "CLINIC_USER_LOGIN",
+      "target_type": "USER",
+      "target_id": "usr_apex_admin_1",
+      "id": "audit_1787055989017_cbxpu",
+      "created_at": "2026-08-18T12:26:29.017Z"
+    },
+    {
+      "id": "audit_init_1",
+      "clinic_id": null,
+      "actor_user_id": "usr_platform_admin_1",
+      "actor_name": "System Owner",
+      "action": "PLATFORM_INITIALIZED",
+      "target_type": "SYSTEM",
+      "metadata": {
+        "version": "1.0.0"
+      },
+      "created_at": "2026-08-18T12:20:12.993Z"
+    },
+    {
+      "id": "audit_clinic_1",
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_platform_admin_1",
+      "actor_name": "System Owner",
+      "action": "CLINIC_CREATED",
+      "target_type": "CLINIC",
+      "target_id": "clinic_apex_101",
+      "metadata": {
+        "clinic_name": "Apex Cardiology & Family Medicine"
+      },
+      "created_at": "2026-08-18T12:20:12.993Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_staff_1",
+      "actor_name": "Sarah Jenkins",
+      "action": "CLINIC_USER_LOGIN",
+      "target_type": "USER",
+      "target_id": "usr_apex_staff_1",
+      "id": "audit_1787058426691_vnkl2",
+      "created_at": "2026-08-18T13:07:06.691Z"
+    },
+    {
+      "clinic_id": "clinic_apex_101",
+      "actor_user_id": "usr_apex_admin_1",
+      "actor_name": "Dr. Arthur Pendelton",
+      "action": "CLINIC_USER_LOGIN",
+      "target_type": "USER",
+      "target_id": "usr_apex_admin_1",
+      "id": "audit_1787058430515_ni4ut",
+      "created_at": "2026-08-18T13:07:10.515Z"
+    },
+    {
+      "clinic_id": null,
+      "actor_user_id": "usr_platform_admin_2",
+      "actor_name": "Platform Administrator",
+      "action": "PLATFORM_ADMIN_LOGIN",
+      "target_type": "USER",
+      "target_id": "usr_platform_admin_2",
+      "id": "audit_1787058436589_b4l1y",
+      "created_at": "2026-08-18T13:07:16.589Z"
+    }
+  ]
+}
