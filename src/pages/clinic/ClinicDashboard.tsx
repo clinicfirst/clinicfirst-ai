@@ -15,6 +15,7 @@ import {
   ChevronDown,
   ChevronUp,
   User,
+  DollarSign,
 } from 'lucide-react';
 import { Card } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
@@ -22,6 +23,9 @@ import { Badge } from '../../components/common/Badge';
 import { apiRequest } from '../../api';
 import { Appointment, Escalation, Doctor, WeeklyAnalytics } from '../../types';
 import { ClinicWeeklyAnalytics } from '../../components/clinic/ClinicWeeklyAnalytics';
+import { DailyCollectionModal } from '../../components/clinic/DailyCollectionModal';
+import { useAuth } from '../../context/AuthContext';
+import { can } from '../../lib/permissions';
 
 interface ClinicDashboardProps {
   onNavigateToTab: (tab: any) => void;
@@ -32,6 +36,9 @@ export const ClinicDashboard: React.FC<ClinicDashboardProps> = ({
   onNavigateToTab,
   onOpenPhoneSimulator,
 }) => {
+  const { user } = useAuth();
+  const canViewCollection = can(user, 'view_daily_collection');
+
   const [data, setData] = useState<{
     clinic: any;
     date: string;
@@ -45,6 +52,13 @@ export const ClinicDashboard: React.FC<ClinicDashboardProps> = ({
       todayAiBookedCount: number;
       activeDoctorsCount: number;
       pendingEscalationsCount: number;
+      dailyCollection?: {
+        total: number;
+        confirmedCompletedTotal: number;
+        currency_symbol: string;
+        currency: string;
+        billedAppointmentsCount: number;
+      };
     };
     upcomingToday: Appointment[];
     pendingEscalations: Escalation[];
@@ -64,6 +78,7 @@ export const ClinicDashboard: React.FC<ClinicDashboardProps> = ({
   const [loading, setLoading] = useState(true);
   const [resolvingId, setResolvingId] = useState<string | null>(null);
   const [showAnalytics, setShowAnalytics] = useState(true);
+  const [collectionModalOpen, setCollectionModalOpen] = useState(false);
 
   const fetchDashboard = async () => {
     try {
@@ -164,25 +179,67 @@ export const ClinicDashboard: React.FC<ClinicDashboardProps> = ({
         </div>
       </div>
 
-      {/* 2. Four Clean KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* 2. KPI Cards (With Daily Fee Collection for Clinic Admin / Platform Admin) */}
+      <div
+        className={`grid grid-cols-1 sm:grid-cols-2 ${
+          canViewCollection ? 'lg:grid-cols-3 xl:grid-cols-5' : 'lg:grid-cols-4'
+        } gap-4`}
+      >
+        {/* Daily Collection of Fees (Admin Exclusive - Hidden from Staff) */}
+        {canViewCollection && (
+          <div
+            id="daily-collection-card"
+            onClick={() => setCollectionModalOpen(true)}
+            className="p-5 bg-white border border-[#E2E8F0] rounded-xl cursor-pointer hover:shadow-md hover:border-[#0F4C5C]/50 transition-all duration-200 group relative overflow-hidden flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#64748B] group-hover:text-[#0F4C5C] transition-colors">
+                  Daily Fee Collection
+                </span>
+                <div className="w-8 h-8 rounded-lg bg-slate-100 text-[#0F4C5C] flex items-center justify-center group-hover:bg-[#0F4C5C] group-hover:text-white transition-all">
+                  <DollarSign className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="text-3xl font-extrabold text-[#172B3A] font-mono tracking-tight flex items-baseline gap-0.5">
+                <span className="text-xl font-bold text-[#0F4C5C]">{currencySymbol}</span>
+                {(m.dailyCollection?.total || 0).toLocaleString('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </div>
+            </div>
+            <div className="text-xs text-[#64748B] mt-3 pt-2 border-t border-slate-100 flex items-center justify-between font-medium">
+              <span>
+                {m.dailyCollection?.billedAppointmentsCount || 0} service
+                {(m.dailyCollection?.billedAppointmentsCount || 0) === 1 ? '' : 's'} billed
+              </span>
+              <span className="text-[11px] text-[#0F4C5C] font-semibold flex items-center gap-0.5 group-hover:underline">
+                View Details <ArrowRight className="w-3 h-3" />
+              </span>
+            </div>
+          </div>
+        )}
+
         {/* Appointments */}
         <div
           onClick={() => onNavigateToTab('appointments')}
-          className="p-5 bg-white border border-[#E2E8F0] rounded-xl cursor-pointer hover:shadow-md hover:border-[#0F4C5C]/40 transition-all duration-200 group"
+          className="p-5 bg-white border border-[#E2E8F0] rounded-xl cursor-pointer hover:shadow-md hover:border-[#0F4C5C]/40 transition-all duration-200 group flex flex-col justify-between"
         >
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#64748B] group-hover:text-[#0F4C5C] transition-colors">
-              Today's Appointments
-            </span>
-            <div className="w-8 h-8 rounded-lg bg-slate-100 text-[#0F4C5C] flex items-center justify-center group-hover:bg-[#0F4C5C] group-hover:text-white transition-all">
-              <Calendar className="w-4 h-4" />
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#64748B] group-hover:text-[#0F4C5C] transition-colors">
+                Today's Appointments
+              </span>
+              <div className="w-8 h-8 rounded-lg bg-slate-100 text-[#0F4C5C] flex items-center justify-center group-hover:bg-[#0F4C5C] group-hover:text-white transition-all">
+                <Calendar className="w-4 h-4" />
+              </div>
+            </div>
+            <div className="text-3xl font-extrabold text-[#172B3A] font-mono tracking-tight">
+              {m.todayAppointmentsTotal}
             </div>
           </div>
-          <div className="text-3xl font-extrabold text-[#172B3A] font-mono tracking-tight">
-            {m.todayAppointmentsTotal}
-          </div>
-          <div className="text-xs text-[#64748B] mt-2 flex items-center gap-1.5 font-medium">
+          <div className="text-xs text-[#64748B] mt-3 pt-2 border-t border-slate-100 flex items-center gap-1.5 font-medium">
             {m.todayAppointmentsTotal === 0 ? (
               <span>No appointments scheduled</span>
             ) : (
@@ -198,20 +255,22 @@ export const ClinicDashboard: React.FC<ClinicDashboardProps> = ({
         {/* AI Calls */}
         <div
           onClick={() => onNavigateToTab('calls')}
-          className="p-5 bg-white border border-[#E2E8F0] rounded-xl cursor-pointer hover:shadow-md hover:border-[#0F4C5C]/40 transition-all duration-200 group"
+          className="p-5 bg-white border border-[#E2E8F0] rounded-xl cursor-pointer hover:shadow-md hover:border-[#0F4C5C]/40 transition-all duration-200 group flex flex-col justify-between"
         >
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#64748B] group-hover:text-[#0F4C5C] transition-colors">
-              AI Handled Calls
-            </span>
-            <div className="w-8 h-8 rounded-lg bg-slate-100 text-[#0F4C5C] flex items-center justify-center group-hover:bg-[#0F4C5C] group-hover:text-white transition-all">
-              <PhoneCall className="w-4 h-4" />
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#64748B] group-hover:text-[#0F4C5C] transition-colors">
+                AI Handled Calls
+              </span>
+              <div className="w-8 h-8 rounded-lg bg-slate-100 text-[#0F4C5C] flex items-center justify-center group-hover:bg-[#0F4C5C] group-hover:text-white transition-all">
+                <PhoneCall className="w-4 h-4" />
+              </div>
+            </div>
+            <div className="text-3xl font-extrabold text-[#172B3A] font-mono tracking-tight">
+              {m.todayAiCalls}
             </div>
           </div>
-          <div className="text-3xl font-extrabold text-[#172B3A] font-mono tracking-tight">
-            {m.todayAiCalls}
-          </div>
-          <div className="text-xs text-[#64748B] mt-2 font-medium">
+          <div className="text-xs text-[#64748B] mt-3 pt-2 border-t border-slate-100 font-medium">
             {m.todayAiCalls === 0 ? (
               <span>Ready for inbound calls</span>
             ) : (
@@ -225,20 +284,22 @@ export const ClinicDashboard: React.FC<ClinicDashboardProps> = ({
         {/* Doctors Available */}
         <div
           onClick={() => onNavigateToTab('doctors')}
-          className="p-5 bg-white border border-[#E2E8F0] rounded-xl cursor-pointer hover:shadow-md hover:border-[#0F4C5C]/40 transition-all duration-200 group"
+          className="p-5 bg-white border border-[#E2E8F0] rounded-xl cursor-pointer hover:shadow-md hover:border-[#0F4C5C]/40 transition-all duration-200 group flex flex-col justify-between"
         >
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#64748B] group-hover:text-[#0F4C5C] transition-colors">
-              Doctors Available
-            </span>
-            <div className="w-8 h-8 rounded-lg bg-slate-100 text-[#0F4C5C] flex items-center justify-center group-hover:bg-[#0F4C5C] group-hover:text-white transition-all">
-              <Stethoscope className="w-4 h-4" />
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#64748B] group-hover:text-[#0F4C5C] transition-colors">
+                Doctors Available
+              </span>
+              <div className="w-8 h-8 rounded-lg bg-slate-100 text-[#0F4C5C] flex items-center justify-center group-hover:bg-[#0F4C5C] group-hover:text-white transition-all">
+                <Stethoscope className="w-4 h-4" />
+              </div>
+            </div>
+            <div className="text-3xl font-extrabold text-[#172B3A] font-mono tracking-tight">
+              {m.activeDoctorsCount}
             </div>
           </div>
-          <div className="text-3xl font-extrabold text-[#172B3A] font-mono tracking-tight">
-            {m.activeDoctorsCount}
-          </div>
-          <div className="text-xs text-[#64748B] mt-2 font-medium">
+          <div className="text-xs text-[#64748B] mt-3 pt-2 border-t border-slate-100 font-medium">
             {m.activeDoctorsCount === 0
               ? 'No active doctors on duty'
               : 'Active doctors on duty today'}
@@ -248,35 +309,37 @@ export const ClinicDashboard: React.FC<ClinicDashboardProps> = ({
         {/* Pending Actions */}
         <div
           onClick={() => onNavigateToTab('calls')}
-          className={`p-5 bg-white border rounded-xl cursor-pointer hover:shadow-md transition-all duration-200 group ${
+          className={`p-5 bg-white border rounded-xl cursor-pointer hover:shadow-md transition-all duration-200 group flex flex-col justify-between ${
             m.pendingEscalationsCount > 0
               ? 'border-rose-300 ring-1 ring-rose-300/40 bg-rose-50/10'
               : 'border-[#E2E8F0]'
           }`}
         >
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#64748B] group-hover:text-[#0F4C5C] transition-colors">
-              Pending Actions
-            </span>
-            <div
-              className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
-                m.pendingEscalationsCount > 0
-                  ? 'bg-rose-100 text-rose-700 group-hover:bg-rose-600 group-hover:text-white'
-                  : 'bg-slate-100 text-[#0F4C5C] group-hover:bg-[#0F4C5C] group-hover:text-white'
-              }`}
-            >
-              {m.pendingEscalationsCount > 0 ? (
-                <AlertCircle className="w-4 h-4" />
-              ) : (
-                <CheckCircle2 className="w-4 h-4" />
-              )}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#64748B] group-hover:text-[#0F4C5C] transition-colors">
+                Pending Actions
+              </span>
+              <div
+                className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
+                  m.pendingEscalationsCount > 0
+                    ? 'bg-rose-100 text-rose-700 group-hover:bg-rose-600 group-hover:text-white'
+                    : 'bg-slate-100 text-[#0F4C5C] group-hover:bg-[#0F4C5C] group-hover:text-white'
+                }`}
+              >
+                {m.pendingEscalationsCount > 0 ? (
+                  <AlertCircle className="w-4 h-4" />
+                ) : (
+                  <CheckCircle2 className="w-4 h-4" />
+                )}
+              </div>
+            </div>
+            <div className="text-3xl font-extrabold text-[#172B3A] font-mono tracking-tight">
+              {m.pendingEscalationsCount}
             </div>
           </div>
-          <div className="text-3xl font-extrabold text-[#172B3A] font-mono tracking-tight">
-            {m.pendingEscalationsCount}
-          </div>
           <div
-            className={`text-xs mt-2 font-semibold ${
+            className={`text-xs mt-3 pt-2 border-t border-slate-100 font-semibold ${
               m.pendingEscalationsCount > 0 ? 'text-rose-600' : 'text-slate-600'
             }`}
           >
@@ -556,6 +619,16 @@ export const ClinicDashboard: React.FC<ClinicDashboardProps> = ({
             />
           )}
         </div>
+      )}
+
+      {/* 6. Daily Fee Collection Modal (Admin Exclusive) */}
+      {canViewCollection && (
+        <DailyCollectionModal
+          isOpen={collectionModalOpen}
+          onClose={() => setCollectionModalOpen(false)}
+          initialDate={data?.date}
+          currencySymbol={currencySymbol}
+        />
       )}
     </div>
   );

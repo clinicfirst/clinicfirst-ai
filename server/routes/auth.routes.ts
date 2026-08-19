@@ -4,6 +4,73 @@ import { generateToken, requireAuth, AuthenticatedRequest } from '../auth';
 
 export const authRouter = Router();
 
+// Public System Statistics (Real live data from database)
+authRouter.get('/stats', (req: Request, res: Response) => {
+  try {
+    const clinics = db.getClinics();
+    const activeClinics = clinics.filter((c) => c.status === 'ACTIVE').length;
+    const today = new Date().toISOString().split('T')[0];
+
+    let totalDoctors = 0;
+    let totalServices = 0;
+    let totalAppointments = 0;
+    let todayAppointments = 0;
+    let totalCalls = 0;
+    let todayCalls = 0;
+    let activeAiAgents = 0;
+
+    for (const c of clinics) {
+      const doctors = db.getDoctors(c.id).filter((d) => d.status === 'ACTIVE');
+      totalDoctors += doctors.length;
+
+      const services = db.getServices(c.id).filter((s) => s.status === 'ACTIVE');
+      totalServices += services.length;
+
+      const apts = db.getAppointments(c.id);
+      totalAppointments += apts.length;
+      todayAppointments += apts.filter((a) => a.date === today).length;
+
+      const calls = db.getCalls(c.id);
+      totalCalls += calls.length;
+      todayCalls += calls.filter((call) => call.created_at.startsWith(today)).length;
+
+      const agent = db.getAiAgent(c.id);
+      if (agent && agent.status === 'ACTIVE') {
+        activeAiAgents += 1;
+      }
+    }
+
+    const firstClinic = clinics[0];
+    return res.json({
+      totalClinics: clinics.length,
+      activeClinics,
+      totalDoctors,
+      totalServices,
+      totalAppointments,
+      todayAppointments,
+      totalCalls,
+      todayCalls,
+      activeAiAgents,
+      primaryClinic: firstClinic
+        ? {
+            id: firstClinic.id,
+            name: firstClinic.name,
+            doctorsCount: db.getDoctors(firstClinic.id).filter((d) => d.status === 'ACTIVE').length,
+            servicesCount: db.getServices(firstClinic.id).filter((s) => s.status === 'ACTIVE').length,
+            todayAppointmentsCount: db.getAppointments(firstClinic.id, { date: today }).length,
+            agentName: db.getAiAgent(firstClinic.id)?.name || 'Ava AI',
+            phone: firstClinic.phone,
+          }
+        : null,
+    });
+  } catch (err: any) {
+    console.error('Error fetching public stats:', err);
+    return res.status(500).json({ error: 'Failed to retrieve system statistics.' });
+  }
+});
+
+
+
 // Platform Admin Login (/platform/login)
 authRouter.post('/platform/login', (req: Request, res: Response) => {
   try {

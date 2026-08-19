@@ -24,6 +24,7 @@ export type PermissionAction =
   | 'configure_ai_receptionist'
   | 'view_ai_receptionist'
   | 'view_calls'
+  | 'view_daily_collection'
   | 'view_audit_logs';
 
 export type AccessLevel = 'NONE' | 'READ' | 'EDIT';
@@ -349,4 +350,54 @@ export interface AuthSession {
   user: User;
   clinic?: Clinic;
 }
+
+export interface DailyCollectionItem {
+  appointment_id: string;
+  patient_id: string;
+  patient_name: string;
+  patient_phone: string;
+  patient_email?: string;
+  doctor_id: string;
+  doctor_name: string;
+  doctor_specialization: string;
+  service_id: string;
+  service_name: string;
+  service_duration: number;
+  fee: number;
+  date: string;
+  start_time: string;
+  end_time: string;
+  status: AppointmentStatus;
+  created_via: 'staff' | 'ai_receptionist';
+  created_at: string;
+}
+
+export interface DailyCollectionSummary {
+  date: string;
+  currency_symbol: string;
+  currency: string;
+  total_collection: number;
+  confirmed_completed_total: number;
+  total_appointments_count: number;
+  confirmed_count: number;
+  completed_count: number;
+  rescheduled_count: number;
+  cancelled_count: number;
+  by_doctor: {
+    doctor_id: string;
+    doctor_name: string;
+    specialization: string;
+    count: number;
+    total_fees: number;
+  }[];
+  by_service: {
+    service_id: string;
+    service_name: string;
+    count: number;
+    fee: number;
+    total_fees: number;
+  }[];
+  items: DailyCollectionItem[];
+}
+
 

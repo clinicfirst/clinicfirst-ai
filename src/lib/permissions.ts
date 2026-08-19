@@ -94,6 +94,10 @@ export function can(user: User | null | undefined, action: PermissionAction): bo
     case 'view_calls':
       return hasAccess(user, 'calls', 'READ');
 
+    // Daily Collection of Fees (Strictly Clinic Admin & Platform Admin - Forbidden for Staff)
+    case 'view_daily_collection':
+      return role === 'CLINIC_ADMIN' || role === 'PLATFORM_ADMIN';
+
     // View Audit Logs
     case 'view_audit_logs':
       return role === 'PLATFORM_ADMIN' || role === 'CLINIC_ADMIN';

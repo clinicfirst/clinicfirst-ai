@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/common/Button';
+import { apiRequest } from '../../api';
 
 interface ClinicLoginProps {
   onSwitchToPlatformLogin?: () => void;
@@ -38,6 +39,47 @@ export const ClinicLogin: React.FC<ClinicLoginProps> = ({
   const [selectedRole, setSelectedRole] = useState<'admin' | 'staff' | 'platform'>('admin');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const [stats, setStats] = useState<{
+    totalClinics: number;
+    activeClinics: number;
+    totalDoctors: number;
+    totalServices: number;
+    totalAppointments: number;
+    todayAppointments: number;
+    totalCalls: number;
+    primaryClinic?: {
+      id: string;
+      name: string;
+      doctorsCount: number;
+      servicesCount: number;
+      todayAppointmentsCount: number;
+      agentName: string;
+      phone: string;
+    } | null;
+  }>({
+    totalClinics: 1,
+    activeClinics: 1,
+    totalDoctors: 1,
+    totalServices: 2,
+    totalAppointments: 1,
+    todayAppointments: 1,
+    totalCalls: 1,
+    primaryClinic: null,
+  });
+
+  useEffect(() => {
+    apiRequest<any>('/api/auth/stats')
+      .then((data) => {
+        if (data) {
+          setStats(data);
+        }
+      })
+      .catch((err) => {
+        console.warn('Failed to load clinic stats:', err);
+      });
+  }, []);
+
 
   // Animated transcript simulation for hero preview
   const [transcriptIndex, setTranscriptIndex] = useState(0);
@@ -226,20 +268,45 @@ export const ClinicLogin: React.FC<ClinicLoginProps> = ({
                 ))}
               </div>
 
-              {/* Clinic Performance Metrics Strip */}
+              {/* Clinic Performance Metrics Strip (Real live database statistics) */}
               <div className="grid grid-cols-3 gap-2 pt-3 border-t border-[#F1F5F9] text-center">
-                <div className="p-2 rounded-lg bg-white border border-[#E2E8F0]/80">
-                  <div className="text-sm font-extrabold text-[#083B4A] font-mono">99.8%</div>
-                  <div className="text-[10px] text-[#64748B] font-medium">Booking Accuracy</div>
-                </div>
-                <div className="p-2 rounded-lg bg-white border border-[#E2E8F0]/80">
-                  <div className="text-sm font-extrabold text-[#0F4C5C] font-mono">0 sec</div>
-                  <div className="text-[10px] text-[#64748B] font-medium">Patient Wait Time</div>
-                </div>
-                <div className="p-2 rounded-lg bg-white border border-[#E2E8F0]/80">
-                  <div className="text-sm font-extrabold text-[#0F4C5C] font-mono">24/7/365</div>
-                  <div className="text-[10px] text-[#64748B] font-medium">Coverage Window</div>
-                </div>
+                {selectedRole === 'platform' ? (
+                  <>
+                    <div className="p-2 rounded-lg bg-white border border-[#E2E8F0]/80">
+                      <div className="text-sm font-extrabold text-[#0A2540] font-mono">{stats.activeClinics}</div>
+                      <div className="text-[10px] text-[#64748B] font-medium">Active Clinics</div>
+                    </div>
+                    <div className="p-2 rounded-lg bg-white border border-[#E2E8F0]/80">
+                      <div className="text-sm font-extrabold text-[#0A2540] font-mono">{stats.totalDoctors}</div>
+                      <div className="text-[10px] text-[#64748B] font-medium">Doctors</div>
+                    </div>
+                    <div className="p-2 rounded-lg bg-white border border-[#E2E8F0]/80">
+                      <div className="text-sm font-extrabold text-[#0A2540] font-mono">{stats.totalCalls}</div>
+                      <div className="text-[10px] text-[#64748B] font-medium">AI Calls</div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="p-2 rounded-lg bg-white border border-[#E2E8F0]/80">
+                      <div className="text-sm font-extrabold text-[#0A2540] font-mono">
+                        {stats.primaryClinic?.doctorsCount ?? stats.totalDoctors}
+                      </div>
+                      <div className="text-[10px] text-[#64748B] font-medium">Active Doctors</div>
+                    </div>
+                    <div className="p-2 rounded-lg bg-white border border-[#E2E8F0]/80">
+                      <div className="text-sm font-extrabold text-[#0A2540] font-mono">
+                        {stats.primaryClinic?.servicesCount ?? stats.totalServices}
+                      </div>
+                      <div className="text-[10px] text-[#64748B] font-medium">Active Services</div>
+                    </div>
+                    <div className="p-2 rounded-lg bg-white border border-[#E2E8F0]/80">
+                      <div className="text-sm font-extrabold text-[#0A2540] font-mono">
+                        {stats.todayAppointments}
+                      </div>
+                      <div className="text-[10px] text-[#64748B] font-medium">Today's Slots</div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 

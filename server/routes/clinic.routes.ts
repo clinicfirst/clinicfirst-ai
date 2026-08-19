@@ -322,6 +322,34 @@ clinicRouter.get(
     const isAiActive = aiAgent?.status === 'ACTIVE';
     const isReady = isAiActive && isApiKeySet;
 
+    // Check if user has permission for fee collection (CLINIC_ADMIN and PLATFORM_ADMIN only)
+    const canViewDailyCollection =
+      req.user?.role === 'CLINIC_ADMIN' || req.user?.role === 'PLATFORM_ADMIN';
+    let dailyCollection = undefined;
+
+    if (canViewDailyCollection) {
+      let totalFeesToday = 0;
+      let confirmedCompletedFees = 0;
+
+      for (const apt of enrichedAppointments) {
+        const fee = Number(apt.service_fee) || 0;
+        if (apt.status !== 'CANCELLED') {
+          totalFeesToday += fee;
+        }
+        if (apt.status === 'CONFIRMED' || apt.status === 'COMPLETED') {
+          confirmedCompletedFees += fee;
+        }
+      }
+
+      dailyCollection = {
+        total: totalFeesToday,
+        confirmedCompletedTotal: confirmedCompletedFees,
+        currency_symbol: clinic?.currency_symbol || '$',
+        currency: clinic?.currency || 'USD',
+        billedAppointmentsCount: enrichedAppointments.filter((a) => a.status !== 'CANCELLED').length,
+      };
+    }
+
     return res.json({
       clinic,
       date: today,
@@ -335,6 +363,7 @@ clinicRouter.get(
         todayAiBookedCount: todayAiBooked,
         activeDoctorsCount: doctors.length,
         pendingEscalationsCount: pendingEscalations.length,
+        ...(dailyCollection ? { dailyCollection } : {}),
       },
       upcomingToday,
       pendingEscalations: pendingEscalations.slice(0, 5),
@@ -349,6 +378,124 @@ clinicRouter.get(
       },
       activeDoctors: doctors,
       weeklyAnalytics,
+    });
+  }
+);
+
+// -------------------------------------------------------------
+// Daily Collection of Fees (Admin only - Strictly Forbidden for Staff)
+// -------------------------------------------------------------
+clinicRouter.get(
+  ['/daily-collection', '/finance/daily-collection'],
+  requireClinicPermission('view_daily_collection'),
+  (req: AuthenticatedRequest, res: Response) => {
+    const clinicId = getAuthClinicId(req);
+    const clinic = db.getClinicById(clinicId);
+    const today = (req.query.date as string) || new Date().toISOString().split('T')[0];
+
+    const appointments = db.getAppointments(clinicId, { date: today });
+
+    const items = appointments
+      .map((apt) => {
+        const patient = apt.patient || db.getPatientById(clinicId, apt.patient_id);
+        const doctor = apt.doctor || db.getDoctorById(clinicId, apt.doctor_id);
+        const service = apt.service || db.getServiceById(clinicId, apt.service_id);
+        const fee = Number(service?.fee) || 0;
+
+        return {
+          appointment_id: apt.id,
+          patient_id: apt.patient_id,
+          patient_name: patient?.name || 'Registered Patient',
+          patient_phone: patient?.phone || '',
+          patient_email: patient?.email || '',
+          doctor_id: apt.doctor_id,
+          doctor_name: doctor?.name || 'Assigned Physician',
+          doctor_specialization: doctor?.specialization || 'General Practice',
+          service_id: apt.service_id,
+          service_name: service?.name || 'General Consultation',
+          service_duration: service?.duration_minutes || 30,
+          fee,
+          date: apt.date,
+          start_time: apt.start_time,
+          end_time: apt.end_time,
+          status: apt.status,
+          created_via: apt.created_via,
+          created_at: apt.created_at,
+        };
+      })
+      .sort((a, b) => a.start_time.localeCompare(b.start_time));
+
+    let totalCollection = 0;
+    let confirmedCompletedTotal = 0;
+    let confirmedCount = 0;
+    let completedCount = 0;
+    let rescheduledCount = 0;
+    let cancelledCount = 0;
+
+    const doctorMap: Record<
+      string,
+      { doctor_id: string; doctor_name: string; specialization: string; count: number; total_fees: number }
+    > = {};
+    const serviceMap: Record<
+      string,
+      { service_id: string; service_name: string; count: number; fee: number; total_fees: number }
+    > = {};
+
+    for (const item of items) {
+      if (item.status === 'CONFIRMED') confirmedCount++;
+      else if (item.status === 'COMPLETED') completedCount++;
+      else if (item.status === 'RESCHEDULED') rescheduledCount++;
+      else if (item.status === 'CANCELLED') cancelledCount++;
+
+      if (item.status !== 'CANCELLED') {
+        totalCollection += item.fee;
+
+        // Group by doctor
+        if (!doctorMap[item.doctor_id]) {
+          doctorMap[item.doctor_id] = {
+            doctor_id: item.doctor_id,
+            doctor_name: item.doctor_name,
+            specialization: item.doctor_specialization,
+            count: 0,
+            total_fees: 0,
+          };
+        }
+        doctorMap[item.doctor_id].count++;
+        doctorMap[item.doctor_id].total_fees += item.fee;
+
+        // Group by service
+        if (!serviceMap[item.service_id]) {
+          serviceMap[item.service_id] = {
+            service_id: item.service_id,
+            service_name: item.service_name,
+            count: 0,
+            fee: item.fee,
+            total_fees: 0,
+          };
+        }
+        serviceMap[item.service_id].count++;
+        serviceMap[item.service_id].total_fees += item.fee;
+      }
+
+      if (item.status === 'CONFIRMED' || item.status === 'COMPLETED') {
+        confirmedCompletedTotal += item.fee;
+      }
+    }
+
+    return res.json({
+      date: today,
+      currency_symbol: clinic?.currency_symbol || '$',
+      currency: clinic?.currency || 'USD',
+      total_collection: totalCollection,
+      confirmed_completed_total: confirmedCompletedTotal,
+      total_appointments_count: items.length,
+      confirmed_count: confirmedCount,
+      completed_count: completedCount,
+      rescheduled_count: rescheduledCount,
+      cancelled_count: cancelledCount,
+      by_doctor: Object.values(doctorMap),
+      by_service: Object.values(serviceMap),
+      items,
     });
   }
 );

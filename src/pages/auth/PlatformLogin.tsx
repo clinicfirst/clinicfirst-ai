@@ -8,16 +8,16 @@ import {
   Eye,
   EyeOff,
   Server,
-  Database,
-  Cpu,
   Building2,
-  Sparkles,
-  Activity,
+  Stethoscope,
+  PhoneCall,
+  Calendar,
   KeyRound,
   CheckCircle2,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/common/Button';
+import { apiRequest } from '../../api';
 
 interface PlatformLoginProps {
   onSwitchToClinicLogin?: () => void;
@@ -34,9 +34,43 @@ export const PlatformLogin: React.FC<PlatformLoginProps> = ({
   const [email, setEmail] = useState('admin@clinicfirst.ai');
   const [password, setPassword] = useState('PlatformAdmin2026!');
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const [stats, setStats] = useState<{
+    totalClinics: number;
+    activeClinics: number;
+    totalDoctors: number;
+    todayAppointments: number;
+    totalCalls: number;
+    activeAiAgents: number;
+  }>({
+    totalClinics: 0,
+    activeClinics: 0,
+    totalDoctors: 0,
+    todayAppointments: 0,
+    totalCalls: 0,
+    activeAiAgents: 0,
+  });
+
+  useEffect(() => {
+    apiRequest<any>('/api/auth/stats')
+      .then((data) => {
+        if (data) {
+          setStats({
+            totalClinics: data.totalClinics || 0,
+            activeClinics: data.activeClinics || 0,
+            totalDoctors: data.totalDoctors || 0,
+            todayAppointments: data.todayAppointments || 0,
+            totalCalls: data.totalCalls || 0,
+            activeAiAgents: data.activeAiAgents || 0,
+          });
+        }
+      })
+      .catch((err) => {
+        console.warn('Failed to load real-time platform stats:', err);
+      });
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,124 +86,120 @@ export const PlatformLogin: React.FC<PlatformLoginProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#083B4A] text-white flex flex-col justify-between selection:bg-[#0F4C5C]/30 relative overflow-hidden font-sans">
-      {/* Background ambient lighting */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#0F4C5C]/40 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 -right-40 w-96 h-96 bg-[#0F4C5C]/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-40 left-1/3 w-96 h-96 bg-[#0F4C5C]/30 rounded-full blur-3xl pointer-events-none" />
-
+    <div className="min-h-screen bg-[#0A2540] text-white flex flex-col justify-between selection:bg-white/20 relative font-sans">
       {/* Top Header Bar */}
-      <header className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between z-10">
+      <header className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between z-10 border-b border-white/10">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0F4C5C] to-[#083B4A] flex items-center justify-center text-white font-black text-sm shadow-md border border-[#0F4C5C]/40">
+          <div className="w-10 h-10 rounded-lg bg-white text-[#0A2540] flex items-center justify-center font-black text-base shadow-sm">
             CF
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-white tracking-tight text-base sm:text-lg">
+              <span className="font-extrabold text-white tracking-tight text-lg">
                 CLINICFIRST
               </span>
-              <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide bg-white/10 text-slate-200 border border-white/20">
-                PLATFORM ROOT
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold tracking-wide bg-white/10 text-white border border-white/20">
+                PLATFORM ADMIN
               </span>
             </div>
-            <p className="text-[11px] text-slate-300 font-medium hidden sm:block">
-              Multi-Tenant Cluster, Voice Pipeline Orchestration & Master Telephony
+            <p className="text-xs text-slate-300 font-medium">
+              Multi-Tenant Clinic Administration & AI Receptionist Control
             </p>
           </div>
         </div>
 
-        {/* Status indicator */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <div className="flex items-center gap-1.5 px-3 py-1 bg-white/10 backdrop-blur-xs border border-white/15 rounded-full text-xs text-white shadow-xs">
-            <Shield className="w-3.5 h-3.5 text-slate-300" />
-            <span className="font-semibold text-[11px]">Hardware Enclave Active</span>
-          </div>
+        {/* Security badge */}
+        <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-white/10 border border-white/20 rounded-full text-xs text-white">
+          <Shield className="w-3.5 h-3.5 text-white" />
+          <span className="font-semibold text-xs">Tenant Isolation Active</span>
         </div>
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 flex items-center justify-center z-10">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex items-center justify-center z-10">
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Left Column: Platform Infrastructure Overview */}
+          {/* Left Column: Real Database Infrastructure Overview */}
           <div className="hidden lg:flex lg:col-span-6 flex-col justify-center space-y-6 pr-4">
             <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-slate-200">
-                <Cpu className="w-3.5 h-3.5 text-slate-300" />
-                <span>Global Multi-Tenant Infrastructure</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-white/10 border border-white/15 text-xs font-semibold text-white">
+                <Building2 className="w-3.5 h-3.5" />
+                <span>Multi-Tenant Master Entity</span>
               </div>
               <h1 className="text-3xl xl:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                Master Control Center &<br />
-                <span className="text-[#0F4C5C]/80">Telephony Node Orchestration.</span>
+                Platform Admin Portal
               </h1>
-              <p className="text-sm text-slate-300 leading-relaxed max-w-lg">
-                Manage clinic deployments, inspect real-time SIP trunk streams, monitor speech latency thresholds, and provision enterprise clinical integrations.
+              <p className="text-sm text-slate-200 leading-relaxed max-w-lg">
+                Manage clinics, oversee provisioned doctors and staff, configure AI Receptionist parameters, and inspect multi-clinic operations in real-time.
               </p>
             </div>
 
-            {/* Live Infrastructure Status Card */}
-            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-5 shadow-2xl relative overflow-hidden space-y-4">
+            {/* Real Live Database Metrics Card */}
+            <div className="bg-white/10 border border-white/15 rounded-xl p-5 space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-slate-200">
-                    <Server className="w-4 h-4" />
-                  </div>
+                <div className="flex items-center gap-2.5">
+                  <Server className="w-4 h-4 text-white" />
                   <div>
-                    <h4 className="text-xs font-bold text-white">Production Cluster Alpha-01</h4>
-                    <p className="text-[11px] text-slate-400">Asia-Southeast & US-East Regional Gateways</p>
+                    <h4 className="text-xs font-bold text-white">Live Production Database</h4>
+                    <p className="text-[11px] text-slate-300">Real-time persistent clinic data</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-mono font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>99.99% UP</span>
+                <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-xs font-bold">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                  <span>ONLINE</span>
                 </div>
               </div>
 
-              {/* Node Metrics */}
-              <div className="grid grid-cols-3 gap-2.5 text-center">
-                <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                  <div className="text-base font-extrabold text-white font-mono">14</div>
-                  <div className="text-[10px] text-slate-400">Active Clinics</div>
+              {/* Real Database Metrics */}
+              <div className="grid grid-cols-3 gap-3 text-center">
+                <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                  <div className="text-xl font-bold text-white font-mono">
+                    {stats.activeClinics}
+                  </div>
+                  <div className="text-[11px] text-slate-300 mt-0.5">Active Clinics</div>
                 </div>
-                <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                  <div className="text-base font-extrabold text-white font-mono">1,842</div>
-                  <div className="text-[10px] text-slate-400">Calls Today</div>
+                <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                  <div className="text-xl font-bold text-white font-mono">
+                    {stats.totalDoctors}
+                  </div>
+                  <div className="text-[11px] text-slate-300 mt-0.5">Doctors</div>
                 </div>
-                <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                  <div className="text-base font-extrabold text-amber-300 font-mono">420ms</div>
-                  <div className="text-[10px] text-slate-400">TTS Latency</div>
+                <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                  <div className="text-xl font-bold text-white font-mono">
+                    {stats.totalCalls}
+                  </div>
+                  <div className="text-[11px] text-slate-300 mt-0.5">AI Calls Recorded</div>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 text-xs text-slate-400">
-              <KeyRound className="w-4 h-4 text-slate-300" />
-              <span>Restricted Root Access. All commands and queries are audit-logged for compliance.</span>
+            <div className="flex items-center gap-2 text-xs text-slate-300">
+              <KeyRound className="w-4 h-4 text-white shrink-0" />
+              <span>Platform Admin credentials have master access to manage all clinic tenants.</span>
             </div>
           </div>
 
           {/* Right Column: Platform Login Card */}
           <div className="w-full lg:col-span-6 max-w-md mx-auto">
-            <div className="bg-white text-[#172B3A] border border-[#E2E8F0] rounded-3xl p-6 sm:p-8 shadow-2xl relative">
+            <div className="bg-white text-[#0A0A0A] border border-gray-200 rounded-2xl p-6 sm:p-8 shadow-xl relative">
               
-              <div className="space-y-2 mb-6">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#083B4A]/10 text-[#083B4A] text-[11px] font-bold">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#0F4C5C]" />
-                  <span>Root SuperAdmin Console</span>
+              <div className="space-y-1.5 mb-6">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#0A2540]/10 text-[#0A2540] text-xs font-bold">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Platform Root Admin</span>
                 </div>
-                <h2 className="text-xl sm:text-2xl font-black tracking-tight text-[#083B4A]">
-                  Platform Sign-In
+                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#0A0A0A]">
+                  Sign In to Master Platform
                 </h2>
-                <p className="text-xs text-[#64748B] font-medium">
-                  Authenticate with authorized Master Root credentials.
+                <p className="text-xs text-gray-500 font-medium">
+                  Enter authorized credentials to access multi-clinic control.
                 </p>
               </div>
 
               {/* Login Form */}
               <form onSubmit={handleSubmit} className="space-y-4">
                 {error && (
-                  <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs font-semibold text-rose-700 flex items-start gap-2">
+                  <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg text-xs font-semibold text-rose-700 flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 shrink-0" />
                     <span>{error}</span>
                   </div>
@@ -177,11 +207,11 @@ export const PlatformLogin: React.FC<PlatformLoginProps> = ({
 
                 {/* Email */}
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#475569]">
-                    Master Admin Email
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-700">
+                    Admin Email
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#94A3B8]">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
                       <Mail className="w-4 h-4" />
                     </div>
                     <input
@@ -190,18 +220,18 @@ export const PlatformLogin: React.FC<PlatformLoginProps> = ({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="admin@clinicfirst.ai"
-                      className="w-full pl-10 pr-3.5 py-2.5 text-sm bg-white border border-[#E2E8F0] rounded-xl focus:border-[#083B4A] focus:ring-2 focus:ring-[#083B4A]/15 text-[#172B3A] placeholder-[#94A3B8] outline-none transition-all"
+                      className="w-full pl-10 pr-3.5 py-2.5 text-sm bg-white border border-gray-300 rounded-lg focus:border-[#0A2540] focus:ring-2 focus:ring-[#0A2540]/15 text-[#0A0A0A] placeholder-gray-400 outline-none transition-all"
                     />
                   </div>
                 </div>
 
                 {/* Password */}
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#475569]">
-                    Master Password
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-700">
+                    Password
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#94A3B8]">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
                       <Lock className="w-4 h-4" />
                     </div>
                     <input
@@ -210,12 +240,12 @@ export const PlatformLogin: React.FC<PlatformLoginProps> = ({
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••••••"
-                      className="w-full pl-10 pr-10 py-2.5 text-sm bg-white border border-[#E2E8F0] rounded-xl focus:border-[#083B4A] focus:ring-2 focus:ring-[#083B4A]/15 text-[#172B3A] placeholder-[#94A3B8] outline-none transition-all font-mono"
+                      className="w-full pl-10 pr-10 py-2.5 text-sm bg-white border border-gray-300 rounded-lg focus:border-[#0A2540] focus:ring-2 focus:ring-[#0A2540]/15 text-[#0A0A0A] placeholder-gray-400 outline-none transition-all font-mono"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-[#94A3B8] hover:text-[#475569] cursor-pointer"
+                      className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-gray-600 cursor-pointer"
                       title={showPassword ? 'Hide password' : 'Show password'}
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -229,31 +259,31 @@ export const PlatformLogin: React.FC<PlatformLoginProps> = ({
                     type="submit"
                     variant="primary"
                     size="lg"
-                    className="w-full bg-[#083B4A] hover:bg-[#0F4C5C] text-white shadow-md shadow-[#083B4A]/20 hover:shadow-lg font-bold text-sm py-3 cursor-pointer"
+                    className="w-full bg-[#0A2540] hover:bg-[#081d32] text-white shadow-sm font-bold text-sm py-2.5 cursor-pointer"
                     loading={loading}
                     icon={<ArrowRight className="w-4 h-4" />}
                   >
-                    Enter Platform SuperAdmin
+                    Enter Platform Dashboard
                   </Button>
                 </div>
               </form>
 
               {/* Demo Account Fill Helper Chip */}
-              <div className="mt-5 pt-4 border-t border-[#F1F5F9]">
+              <div className="mt-5 pt-4 border-t border-gray-100">
                 <button
                   type="button"
                   onClick={() => {
                     setEmail('admin@clinicfirst.ai');
                     setPassword('PlatformAdmin2026!');
                   }}
-                  className="w-full text-left p-2.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#083B4A] text-xs text-[#172B3A] transition-all flex items-center justify-between cursor-pointer group"
+                  className="w-full text-left p-2.5 rounded-lg bg-gray-50 border border-gray-200 hover:border-[#0A2540] text-xs text-[#0A0A0A] transition-all flex items-center justify-between cursor-pointer"
                 >
                   <div>
-                    <span className="font-semibold block">Auto-Fill SuperAdmin</span>
-                    <span className="text-[11px] text-[#64748B]">admin@clinicfirst.ai</span>
+                    <span className="font-semibold block text-[#0A0A0A]">Fill Platform Admin Credentials</span>
+                    <span className="text-[11px] text-gray-500">admin@clinicfirst.ai</span>
                   </div>
-                  <span className="text-[10px] font-mono font-bold text-[#083B4A] px-2 py-0.5 bg-white border border-[#E2E8F0] rounded">
-                    PlatformAdmin2026!
+                  <span className="text-[10px] font-mono font-bold text-[#0A2540] px-2 py-0.5 bg-white border border-gray-200 rounded">
+                    Auto-Fill
                   </span>
                 </button>
               </div>
@@ -264,9 +294,9 @@ export const PlatformLogin: React.FC<PlatformLoginProps> = ({
                   type="button"
                   id="switch-to-clinic-btn"
                   onClick={switchPortal}
-                  className="text-xs text-[#083B4A] hover:text-[#0F4C5C] hover:underline font-semibold cursor-pointer py-1 px-2 rounded hover:bg-[#083B4A]/5 transition-colors"
+                  className="text-xs text-[#0A2540] hover:underline font-semibold cursor-pointer py-1 px-2"
                 >
-                  ← Return to Clinic Staff & Doctor Login
+                  ← Return to Clinic Staff & Admin Login
                 </button>
               </div>
             </div>
@@ -275,12 +305,13 @@ export const PlatformLogin: React.FC<PlatformLoginProps> = ({
       </main>
 
       {/* Footer */}
-      <footer className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400 z-10">
-        <span>CLINICFIRST Master Control Infrastructure • Internal Platform v2.4.0</span>
-        <span className="hidden sm:inline">Authorized Administrative Personnel Only</span>
+      <footer className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-300 z-10">
+        <span>CLINICFIRST Multi-Tenant SaaS Platform</span>
+        <span className="hidden sm:inline">Platform Administrator Portal</span>
       </footer>
     </div>
   );
 };
+
 
 
