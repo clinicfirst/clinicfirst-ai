@@ -48,7 +48,10 @@ export class GeminiLiveVoiceProvider implements IVoiceProvider {
     const toolCallsExecuted: Array<{ name: string; args: any; result: any }> = [];
 
     const systemInstruction = session?.systemInstruction || `You are ${session?.agentName || 'Ava'}, a professional, compassionate, and efficient AI Receptionist for this clinic.`;
-    const selectedModel = platformConfig.model || 'gemini-2.5-flash';
+    let selectedModel = platformConfig.model || 'gemini-3.6-flash';
+    if (selectedModel.includes('gemini-2.5')) {
+      selectedModel = selectedModel.replace('gemini-2.5', 'gemini-3.6');
+    }
     const temperature = platformConfig.temperature ?? 0.2;
 
     if (!ai) {

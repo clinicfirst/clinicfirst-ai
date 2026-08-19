@@ -371,7 +371,7 @@ clinicRouter.get(
         name: aiAgent?.name || 'Ava',
         status: isReady ? 'ACTIVE' : isAiActive ? 'NOT_READY' : 'INACTIVE',
         provider: platformAiConfig?.provider === 'sarvam' ? 'Sarvam' : 'Gemini',
-        model: platformAiConfig?.model || 'gemini-2.5-flash',
+        model: platformAiConfig?.model || 'gemini-3.6-flash',
         phoneStatus: 'Connected',
         isReady,
         apiKeyConfigured: isApiKeySet,

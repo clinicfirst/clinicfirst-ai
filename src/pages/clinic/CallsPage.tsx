@@ -194,7 +194,7 @@ export const CallsPage: React.FC = () => {
                 <div className="py-6 text-center text-gray-400">No transcript lines recorded.</div>
               ) : (
                 selectedCall.transcript.map((turn, i) => {
-                  const isAgent = turn.role === 'agent';
+                  const isAgent = turn.speaker === 'ai' || (turn as any).role === 'agent';
                   return (
                     <div
                       key={i}
@@ -212,9 +212,8 @@ export const CallsPage: React.FC = () => {
                             <span>Caller</span>
                           </>
                         )}
-                        <span>• {turn.timestamp ? new Date(turn.timestamp).toLocaleTimeString() : ''}</span>
+                        <span>• {turn.timestamp}</span>
                       </div>
-
                       <div
                         className={`p-2.5 rounded-lg max-w-[85%] text-xs leading-relaxed ${
                           isAgent

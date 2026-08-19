@@ -254,7 +254,7 @@ class DatabaseEngine {
     return {
       id: 'platform_ai_default',
       provider: "gemini" as const,
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3.6-flash',
       voice_provider: "gemini_live" as const,
       voice_name: 'Zephyr',
       temperature: 0.2,

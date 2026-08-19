@@ -3,6 +3,7 @@ import { GeminiLiveVoiceProvider } from './providers/gemini-live.provider';
 import { SarvamVoiceProvider } from './providers/sarvam.provider';
 import { executeVoiceTool } from './tools';
 import { db } from '../db';
+import { GoogleGenAI } from '@google/genai';
 
 export function buildHierarchicalSystemInstruction(
   clinicId: string,
@@ -184,7 +185,6 @@ class VoiceEngineManager {
     try {
       const apiKey = db.getRawPlatformAiApiKey();
       if (apiKey) {
-        const { GoogleGenAI } = require('@google/genai');
         const ai = new GoogleGenAI({ apiKey });
         const ttsResponse = await ai.models.generateContent({
           model: 'gemini-3.1-flash-tts-preview',
@@ -316,6 +316,7 @@ class VoiceEngineManager {
 
     db.updateCall(clinicId, callId, {
       status: call.outcome === 'ESCALATED' ? 'escalated' : 'completed',
+      outcome: call.outcome === 'IN_PROGRESS' ? 'COMPLETED' : call.outcome,
       duration_seconds: durationSeconds,
       end_time: new Date().toISOString(),
       summary: finalSummary,

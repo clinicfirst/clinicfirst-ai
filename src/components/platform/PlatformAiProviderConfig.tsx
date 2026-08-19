@@ -27,7 +27,7 @@ export const PlatformAiProviderConfig: React.FC<PlatformAiProviderConfigProps> =
 
   // Local state for basic fields
   const [provider, setProvider] = useState(config.provider || 'gemini');
-  const [model, setModel] = useState(config.model || 'gemini-2.5-flash');
+  const [model, setModel] = useState(config.model || 'gemini-3.6-flash');
   const [voiceProvider, setVoiceProvider] = useState(config.voice_provider || 'gemini_live');
   const [voiceName, setVoiceName] = useState(config.voice_name || 'Zephyr');
   const [temperature, setTemperature] = useState(config.temperature ?? 0.2);
@@ -325,8 +325,8 @@ export const PlatformAiProviderConfig: React.FC<PlatformAiProviderConfigProps> =
               onChange={(e) => setModel(e.target.value)}
               className="w-full text-xs rounded border border-gray-300 bg-white px-3 py-2 text-[#0A0A0A] focus:outline-none focus:border-[#0A2540]"
             >
-              <option value="gemini-2.5-flash">gemini-2.5-flash (Recommended: Low latency & Tool calling)</option>
-              <option value="gemini-2.5-pro">gemini-2.5-pro (High reasoning precision)</option>
+              <option value="gemini-3.6-flash">gemini-3.6-flash (Recommended: Low latency & Tool calling)</option>
+              <option value="gemini-3.6-pro">gemini-3.6-pro (High reasoning precision)</option>
               <option value="gemini-1.5-flash">gemini-1.5-flash (Standard fallback)</option>
             </select>
             <p className="text-[11px] text-gray-500 mt-1">

@@ -434,8 +434,13 @@ platformRouter.post('/ai-config/test-connection', async (req: AuthenticatedReque
       httpOptions: { headers: { 'User-Agent': 'aistudio-build' } },
     });
 
+    let modelToUse = config.model || 'gemini-3.6-flash';
+    if (modelToUse.includes('gemini-2.5')) {
+      modelToUse = modelToUse.replace('gemini-2.5', 'gemini-3.6');
+    }
+
     const testResponse = await ai.models.generateContent({
-      model: config.model || 'gemini-2.5-flash',
+      model: modelToUse,
       contents: 'Respond with exactly "HEALTH_CHECK_OK" to verify connection.',
     });
 
@@ -443,9 +448,9 @@ platformRouter.post('/ai-config/test-connection', async (req: AuthenticatedReque
     return res.json({
       success: true,
       provider: config.provider,
-      model: config.model,
+      model: modelToUse,
       latencyMs,
-      message: `Connection successful. Model '${config.model}' responded in ${latencyMs}ms.`,
+      message: `Connection successful. Model '${modelToUse}' responded in ${latencyMs}ms.`,
       rawOutput: testResponse.text?.trim() || 'OK',
     });
   } catch (err: any) {
