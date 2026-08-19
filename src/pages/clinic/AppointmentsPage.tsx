@@ -23,8 +23,13 @@ import { Modal } from '../../components/common/Modal';
 import { Input, Select } from '../../components/common/Input';
 import { apiRequest } from '../../api';
 import { Appointment, Doctor, Service, Patient } from '../../types';
+import { useAuth } from '../../context/AuthContext';
+import { can } from '../../lib/permissions';
 
 export const AppointmentsPage: React.FC = () => {
+  const { user } = useAuth();
+  const canManage = can(user, 'manage_appointments');
+
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [services, setServices] = useState<Service[]>([]);
@@ -349,14 +354,16 @@ export const AppointmentsPage: React.FC = () => {
           </p>
         </div>
 
-        <Button
-          variant="primary"
-          size="md"
-          icon={<Plus className="w-4 h-4" />}
-          onClick={() => setBookModalOpen(true)}
-        >
-          Book New Appointment
-        </Button>
+        {canManage && (
+          <Button
+            variant="primary"
+            size="md"
+            icon={<Plus className="w-4 h-4" />}
+            onClick={() => setBookModalOpen(true)}
+          >
+            Book New Appointment
+          </Button>
+        )}
       </div>
 
       {/* Date Navigation & Filters Bar */}
@@ -484,7 +491,7 @@ export const AppointmentsPage: React.FC = () => {
 
                     {/* Actions */}
                     <td className="px-6 py-4 text-right space-x-1.5 whitespace-nowrap opacity-80 group-hover:opacity-100 transition-opacity duration-200">
-                      {apt.status === 'CONFIRMED' && (
+                      {apt.status === 'CONFIRMED' && canManage && (
                         <>
                           <button
                             onClick={() => handleStatusChange(apt.id, 'COMPLETED')}
@@ -514,6 +521,12 @@ export const AppointmentsPage: React.FC = () => {
                             Cancel
                           </button>
                         </>
+                      )}
+
+                      {apt.status === 'CONFIRMED' && !canManage && (
+                        <span className="text-[11px] text-gray-400 font-mono">
+                          Confirmed
+                        </span>
                       )}
 
                       {apt.status === 'RESCHEDULED' && (

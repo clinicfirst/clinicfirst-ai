@@ -313,6 +313,15 @@ clinicRouter.get(
       appointmentByDoctor,
     };
 
+    const platformAiConfig = db.getPlatformAiConfig();
+    const isApiKeySet = Boolean(
+      platformAiConfig?.api_key_configured ||
+      process.env.GEMINI_API_KEY ||
+      process.env.SARVAM_API_KEY
+    );
+    const isAiActive = aiAgent?.status === 'ACTIVE';
+    const isReady = isAiActive && isApiKeySet;
+
     return res.json({
       clinic,
       date: today,
@@ -330,9 +339,13 @@ clinicRouter.get(
       upcomingToday,
       pendingEscalations: pendingEscalations.slice(0, 5),
       aiStatus: {
-        name: aiAgent?.name || 'AI Receptionist',
-        status: aiAgent?.status || 'INACTIVE',
-        provider: aiAgent?.voice_provider || 'gemini_live',
+        name: aiAgent?.name || 'Ava',
+        status: isReady ? 'ACTIVE' : isAiActive ? 'NOT_READY' : 'INACTIVE',
+        provider: platformAiConfig?.provider === 'sarvam' ? 'Sarvam' : 'Gemini',
+        model: platformAiConfig?.model || 'gemini-2.5-flash',
+        phoneStatus: 'Connected',
+        isReady,
+        apiKeyConfigured: isApiKeySet,
       },
       activeDoctors: doctors,
       weeklyAnalytics,

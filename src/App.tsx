@@ -104,17 +104,6 @@ const MainApp: React.FC = () => {
         {activeTab === 'audit_logs' && <ClinicAuditLogsPage />}
       </main>
 
-      {/* Floating AI Call Test Trigger for Clinic */}
-      <div className="fixed bottom-6 right-6 z-40">
-        <button
-          onClick={() => setSimulatorOpen(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-[#0F4C5C] hover:bg-[#083B4A] text-white text-xs font-semibold rounded-full shadow-lg hover:shadow-xl transition-all cursor-pointer border border-[#0F4C5C]/50 hover:scale-105 active:scale-95"
-        >
-          <Phone className="w-4 h-4 text-white" />
-          <span>Call AI Receptionist</span>
-        </button>
-      </div>
-
       {/* Phone Simulator Modal */}
       {clinic && (
         <AiPhoneSimulator

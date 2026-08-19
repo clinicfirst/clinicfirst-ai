@@ -43,33 +43,33 @@ export const Badge: React.FC<BadgeProps> = ({ status, label, className = '' }) =
     switch (normalized) {
       case 'CONFIRMED':
         return {
-          icon: <CheckCircle2 className="w-3.5 h-3.5 text-teal-600" />,
-          border: 'border-teal-200 bg-teal-50 text-teal-800 font-medium',
+          icon: <CheckCircle2 className="w-3.5 h-3.5 text-[#0F4C5C]" />,
+          border: 'border-[#0F4C5C]/30 bg-[#0F4C5C]/10 text-[#0F4C5C] font-semibold',
           text: label || 'Confirmed',
         };
       case 'COMPLETED':
         return {
-          icon: <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />,
-          border: 'border-emerald-200 bg-emerald-50 text-emerald-800 font-medium',
+          icon: <CheckCircle2 className="w-3.5 h-3.5 text-slate-700" />,
+          border: 'border-slate-300 bg-slate-100 text-slate-800 font-medium',
           text: label || 'Completed',
         };
       case 'ACTIVE':
         return {
-          icon: <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />,
-          border: 'border-emerald-200 bg-emerald-50 text-emerald-800 font-medium',
+          icon: <CheckCircle2 className="w-3.5 h-3.5 text-[#0F4C5C]" />,
+          border: 'border-[#0F4C5C]/30 bg-[#0F4C5C]/10 text-[#0F4C5C] font-semibold',
           text: label || 'Active',
         };
       case 'REQUESTED':
       case 'PENDING':
         return {
-          icon: <Clock className="w-3.5 h-3.5 text-amber-600" />,
+          icon: <Clock className="w-3.5 h-3.5 text-amber-700" />,
           border: 'border-amber-200 bg-amber-50 text-amber-800 font-medium',
           text: label || 'Requested',
         };
       case 'RESCHEDULED':
         return {
-          icon: <RefreshCw className="w-3.5 h-3.5 text-indigo-600" />,
-          border: 'border-indigo-200 bg-indigo-50 text-indigo-800 font-medium',
+          icon: <RefreshCw className="w-3.5 h-3.5 text-slate-700" />,
+          border: 'border-slate-300 bg-slate-100 text-slate-800 font-medium',
           text: label || 'Rescheduled',
         };
       case 'CANCELLED':
@@ -93,14 +93,14 @@ export const Badge: React.FC<BadgeProps> = ({ status, label, className = '' }) =
         };
       case 'IN_PROGRESS':
         return {
-          icon: <PhoneCall className="w-3.5 h-3.5 text-[#2AAFA3] animate-pulse" />,
-          border: 'border-[#2AAFA3]/30 bg-[#2AAFA3]/10 text-[#0F4C5C] font-medium',
+          icon: <PhoneCall className="w-3.5 h-3.5 text-[#0F4C5C] animate-pulse" />,
+          border: 'border-[#0F4C5C]/30 bg-[#0F4C5C]/10 text-[#0F4C5C] font-medium',
           text: label || 'In Progress',
         };
       case 'AI_RECEPTIONIST':
         return {
           icon: <Bot className="w-3.5 h-3.5 text-white" />,
-          border: 'bg-[#2AAFA3] text-white border border-[#2AAFA3] font-medium shadow-xs',
+          border: 'bg-[#0F4C5C] text-white border border-[#0F4C5C] font-medium shadow-xs',
           text: label || 'AI Receptionist',
         };
       case 'STAFF':

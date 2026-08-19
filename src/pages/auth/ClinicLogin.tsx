@@ -104,10 +104,10 @@ export const ClinicLogin: React.FC<ClinicLoginProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#F7F9FC] text-[#172B3A] flex flex-col justify-between selection:bg-[#2AAFA3]/20 relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-[#F7F9FC] text-[#172B3A] flex flex-col justify-between selection:bg-[#0F4C5C]/20 relative overflow-hidden font-sans">
       {/* Ambient background decoration */}
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#0F4C5C]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 -right-40 w-96 h-96 bg-[#2AAFA3]/8 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 -right-40 w-96 h-96 bg-[#083B4A]/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-40 left-1/3 w-96 h-96 bg-[#083B4A]/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Top Header Bar */}
@@ -121,7 +121,7 @@ export const ClinicLogin: React.FC<ClinicLoginProps> = ({
               <span className="font-extrabold text-[#083B4A] tracking-tight text-base sm:text-lg">
                 CLINICFIRST
               </span>
-              <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide bg-[#2AAFA3]/15 text-[#0F4C5C] border border-[#2AAFA3]/30">
+              <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide bg-[#0F4C5C]/10 text-[#0F4C5C] border border-[#0F4C5C]/20">
                 HEALTHCARE OS
               </span>
             </div>
@@ -155,7 +155,7 @@ export const ClinicLogin: React.FC<ClinicLoginProps> = ({
           <div className="hidden lg:flex lg:col-span-6 flex-col justify-center space-y-6 pr-4">
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E2E8F0] text-xs font-semibold text-[#0F4C5C] shadow-xs">
-                <Sparkles className="w-3.5 h-3.5 text-[#2AAFA3]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#0F4C5C]" />
                 <span>Next-Generation Medical AI Voice Infrastructure</span>
               </div>
               <h1 className="text-3xl xl:text-4xl font-extrabold text-[#083B4A] tracking-tight leading-tight">
@@ -176,12 +176,12 @@ export const ClinicLogin: React.FC<ClinicLoginProps> = ({
                     <div className="w-9 h-9 rounded-xl bg-[#0F4C5C] flex items-center justify-center text-white shadow-xs">
                       <Bot className="w-5 h-5" />
                     </div>
-                    <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#2AAFA3] border-2 border-white ring-1 ring-[#2AAFA3]/30 animate-pulse" />
+                    <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#0F4C5C] border-2 border-white ring-1 ring-[#0F4C5C]/30" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
                       <h4 className="text-xs font-bold text-[#172B3A]">Ava — Live Clinical AI Receptionist</h4>
-                      <span className="text-[10px] font-mono px-1.5 py-0.2 bg-[#2AAFA3]/15 text-[#0F4C5C] rounded font-semibold">
+                      <span className="text-[10px] font-mono px-1.5 py-0.2 bg-[#0F4C5C]/10 text-[#0F4C5C] rounded font-semibold">
                         ACTIVE
                       </span>
                     </div>
@@ -190,7 +190,7 @@ export const ClinicLogin: React.FC<ClinicLoginProps> = ({
                 </div>
 
                 <div className="flex items-center gap-1.5 px-2 py-1 bg-white border border-[#E2E8F0] rounded-md text-[10px] font-mono text-[#0F4C5C] font-bold">
-                  <Activity className="w-3 h-3 text-[#2AAFA3] animate-pulse" />
+                  <Activity className="w-3 h-3 text-[#0F4C5C]" />
                   <span>2.1s Latency</span>
                 </div>
               </div>
@@ -237,7 +237,7 @@ export const ClinicLogin: React.FC<ClinicLoginProps> = ({
                   <div className="text-[10px] text-[#64748B] font-medium">Patient Wait Time</div>
                 </div>
                 <div className="p-2 rounded-lg bg-white border border-[#E2E8F0]/80">
-                  <div className="text-sm font-extrabold text-[#2AAFA3] font-mono">24/7/365</div>
+                  <div className="text-sm font-extrabold text-[#0F4C5C] font-mono">24/7/365</div>
                   <div className="text-[10px] text-[#64748B] font-medium">Coverage Window</div>
                 </div>
               </div>
@@ -249,10 +249,10 @@ export const ClinicLogin: React.FC<ClinicLoginProps> = ({
                 <div className="w-7 h-7 rounded-full bg-[#0F4C5C] text-white flex items-center justify-center font-bold text-[10px] ring-2 ring-white">
                   DR
                 </div>
-                <div className="w-7 h-7 rounded-full bg-[#2AAFA3] text-white flex items-center justify-center font-bold text-[10px] ring-2 ring-white">
+                <div className="w-7 h-7 rounded-full bg-[#083B4A] text-white flex items-center justify-center font-bold text-[10px] ring-2 ring-white">
                   RN
                 </div>
-                <div className="w-7 h-7 rounded-full bg-[#083B4A] text-white flex items-center justify-center font-bold text-[10px] ring-2 ring-white">
+                <div className="w-7 h-7 rounded-full bg-slate-700 text-white flex items-center justify-center font-bold text-[10px] ring-2 ring-white">
                   MD
                 </div>
               </div>
@@ -303,7 +303,7 @@ export const ClinicLogin: React.FC<ClinicLoginProps> = ({
                           : 'text-[#64748B] hover:text-[#172B3A]'
                       }`}
                     >
-                      <UserCheck className="w-4 h-4 mb-1 text-[#2AAFA3]" />
+                      <UserCheck className="w-4 h-4 mb-1 text-[#0F4C5C]" />
                       <span className="text-[11px]">Front Desk</span>
                     </button>
 
@@ -316,7 +316,7 @@ export const ClinicLogin: React.FC<ClinicLoginProps> = ({
                           : 'text-[#64748B] hover:text-[#172B3A]'
                       }`}
                     >
-                      <Cpu className="w-4 h-4 mb-1 text-[#2AAFA3]" />
+                      <Cpu className="w-4 h-4 mb-1 text-slate-300" />
                       <span className="text-[11px]">Platform Master</span>
                     </button>
                   </div>

@@ -20,8 +20,13 @@ import { Modal } from '../../components/common/Modal';
 import { Input, Select } from '../../components/common/Input';
 import { apiRequest } from '../../api';
 import { Patient, Appointment, Call } from '../../types';
+import { useAuth } from '../../context/AuthContext';
+import { can } from '../../lib/permissions';
 
 export const PatientsPage: React.FC = () => {
+  const { user } = useAuth();
+  const canManage = can(user, 'manage_patients');
+
   const [patients, setPatients] = useState<Patient[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
@@ -120,14 +125,16 @@ export const PatientsPage: React.FC = () => {
           </p>
         </div>
 
-        <Button
-          variant="primary"
-          size="md"
-          icon={<Plus className="w-4 h-4" />}
-          onClick={() => setAddModalOpen(true)}
-        >
-          Add New Patient
-        </Button>
+        {canManage && (
+          <Button
+            variant="primary"
+            size="md"
+            icon={<Plus className="w-4 h-4" />}
+            onClick={() => setAddModalOpen(true)}
+          >
+            Add New Patient
+          </Button>
+        )}
       </div>
 
       {/* Search Input */}

@@ -142,7 +142,7 @@ export const ClinicWeeklyAnalytics: React.FC<ClinicWeeklyAnalyticsProps> = ({
               onClick={() => setActiveMetricView('calls')}
               className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
                 activeMetricView === 'calls'
-                  ? 'bg-white text-[#2AAFA3] shadow-xs border border-[#E2E8F0]'
+                  ? 'bg-white text-[#0F4C5C] shadow-xs border border-[#E2E8F0]'
                   : 'text-[#64748B] hover:text-[#172B3A]'
               }`}
             >
@@ -191,7 +191,7 @@ export const ClinicWeeklyAnalytics: React.FC<ClinicWeeklyAnalyticsProps> = ({
           <div className="text-xl font-extrabold text-[#172B3A] font-mono">
             {summary.totalAppointments}
           </div>
-          <div className="text-[10px] text-emerald-700 font-semibold flex items-center gap-1">
+          <div className="text-[10px] text-slate-700 font-semibold flex items-center gap-1">
             <span>+{summary.appointmentGrowthPercent}% vs last week</span>
           </div>
         </div>
@@ -200,12 +200,12 @@ export const ClinicWeeklyAnalytics: React.FC<ClinicWeeklyAnalyticsProps> = ({
         <div className="p-3.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl space-y-1">
           <div className="flex items-center justify-between text-[11px] font-semibold text-[#64748B]">
             <span>AI Phone Calls</span>
-            <PhoneCall className="w-3.5 h-3.5 text-[#2AAFA3]" />
+            <PhoneCall className="w-3.5 h-3.5 text-[#0F4C5C]" />
           </div>
           <div className="text-xl font-extrabold text-[#172B3A] font-mono">
             {summary.totalCalls}
           </div>
-          <div className="text-[10px] text-teal-700 font-semibold flex items-center gap-1">
+          <div className="text-[10px] text-slate-700 font-semibold flex items-center gap-1">
             <span>+{summary.callGrowthPercent}% call volume</span>
           </div>
         </div>
@@ -228,7 +228,7 @@ export const ClinicWeeklyAnalytics: React.FC<ClinicWeeklyAnalyticsProps> = ({
         <div className="p-3.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl space-y-1">
           <div className="flex items-center justify-between text-[11px] font-semibold text-[#64748B]">
             <span>Avg Handling Time</span>
-            <Clock className="w-3.5 h-3.5 text-sky-600" />
+            <Clock className="w-3.5 h-3.5 text-slate-600" />
           </div>
           <div className="text-xl font-extrabold text-[#172B3A] font-mono">
             {summary.avgCallHandlingSeconds}s
@@ -258,16 +258,16 @@ export const ClinicWeeklyAnalytics: React.FC<ClinicWeeklyAnalyticsProps> = ({
                 <AreaChart data={trends} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorAppointments" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#0F4C5C" stopOpacity={0.4} />
+                      <stop offset="5%" stopColor="#0F4C5C" stopOpacity={0.35} />
                       <stop offset="95%" stopColor="#0F4C5C" stopOpacity={0.0} />
                     </linearGradient>
                     <linearGradient id="colorCalls" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#2AAFA3" stopOpacity={0.4} />
-                      <stop offset="95%" stopColor="#2AAFA3" stopOpacity={0.0} />
+                      <stop offset="5%" stopColor="#334155" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="#334155" stopOpacity={0.0} />
                     </linearGradient>
                     <linearGradient id="colorAiApts" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#0284C7" stopOpacity={0.4} />
-                      <stop offset="95%" stopColor="#0284C7" stopOpacity={0.0} />
+                      <stop offset="5%" stopColor="#64748B" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="#64748B" stopOpacity={0.0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
@@ -308,7 +308,7 @@ export const ClinicWeeklyAnalytics: React.FC<ClinicWeeklyAnalyticsProps> = ({
                         type="monotone"
                         dataKey="totalCalls"
                         name="AI Inbound Calls"
-                        stroke="#2AAFA3"
+                        stroke="#334155"
                         strokeWidth={2.5}
                         fillOpacity={1}
                         fill="url(#colorCalls)"
@@ -339,7 +339,7 @@ export const ClinicWeeklyAnalytics: React.FC<ClinicWeeklyAnalyticsProps> = ({
                         type="monotone"
                         dataKey="staffBookedAppointments"
                         name="Front Desk / Staff Bookings"
-                        stroke="#0284C7"
+                        stroke="#64748B"
                         strokeWidth={2}
                         fillOpacity={1}
                         fill="url(#colorAiApts)"
@@ -348,7 +348,7 @@ export const ClinicWeeklyAnalytics: React.FC<ClinicWeeklyAnalyticsProps> = ({
                         type="monotone"
                         dataKey="confirmedAppointments"
                         name="Confirmed Patient Appointments"
-                        stroke="#10B981"
+                        stroke="#0F4C5C"
                         strokeWidth={2}
                         dot={{ r: 3 }}
                       />
@@ -361,7 +361,7 @@ export const ClinicWeeklyAnalytics: React.FC<ClinicWeeklyAnalyticsProps> = ({
                         type="monotone"
                         dataKey="totalCalls"
                         name="Total AI Calls"
-                        stroke="#2AAFA3"
+                        stroke="#334155"
                         strokeWidth={2.5}
                         fillOpacity={1}
                         fill="url(#colorCalls)"
@@ -414,7 +414,7 @@ export const ClinicWeeklyAnalytics: React.FC<ClinicWeeklyAnalyticsProps> = ({
                   {activeMetricView === 'combined' && (
                     <>
                       <Bar dataKey="totalAppointments" name="Total Appointments" fill="#0F4C5C" radius={[4, 4, 0, 0]} />
-                      <Bar dataKey="totalCalls" name="AI Inbound Calls" fill="#2AAFA3" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="totalCalls" name="AI Inbound Calls" fill="#334155" radius={[4, 4, 0, 0]} />
                     </>
                   )}
 
@@ -427,7 +427,7 @@ export const ClinicWeeklyAnalytics: React.FC<ClinicWeeklyAnalyticsProps> = ({
 
                   {activeMetricView === 'calls' && (
                     <>
-                      <Bar dataKey="aiCallsResolved" name="Resolved by AI" fill="#2AAFA3" radius={[4, 4, 0, 0]} stackId="c" />
+                      <Bar dataKey="aiCallsResolved" name="Resolved by AI" fill="#0F4C5C" radius={[4, 4, 0, 0]} stackId="c" />
                       <Bar dataKey="escalatedCalls" name="Escalated" fill="#E11D48" radius={[4, 4, 0, 0]} stackId="c" />
                     </>
                   )}
@@ -555,7 +555,7 @@ export const ClinicWeeklyAnalytics: React.FC<ClinicWeeklyAnalyticsProps> = ({
                       </div>
                       <div className="w-full h-1.5 bg-[#E2E8F0] rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-[#0F4C5C] to-[#2AAFA3] rounded-full transition-all duration-500"
+                          className="h-full bg-[#0F4C5C] rounded-full transition-all duration-500"
                           style={{ width: `${pct}%` }}
                         />
                       </div>

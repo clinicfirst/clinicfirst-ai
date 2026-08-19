@@ -300,7 +300,7 @@ export const AiPhoneSimulator: React.FC<AiPhoneSimulatorProps> = ({
             <div className="min-w-0">
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <h4 className="text-xs sm:text-sm font-bold text-[#172B3A] truncate">{agentName}</h4>
-                <span className="text-[10px] sm:text-xs text-[#2AAFA3] font-semibold bg-[#2AAFA3]/10 px-1.5 py-0.5 rounded shrink-0">AI Live Agent</span>
+                <span className="text-[10px] sm:text-xs text-[#0F4C5C] font-semibold bg-[#0F4C5C]/10 px-1.5 py-0.5 rounded shrink-0">AI Receptionist</span>
               </div>
               <p className="text-[11px] sm:text-xs text-[#64748B] truncate">{clinicName}</p>
             </div>
@@ -309,7 +309,7 @@ export const AiPhoneSimulator: React.FC<AiPhoneSimulatorProps> = ({
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {callState === 'connected' && (
               <div className="flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 bg-[#F8FAFC] border border-[#E2E8F0] rounded-md text-[11px] sm:text-xs font-mono font-bold text-[#0F4C5C]">
-                <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#2AAFA3]" />
+                <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#0F4C5C]" />
                 <span>{formatTimer(durationSeconds)}</span>
               </div>
             )}

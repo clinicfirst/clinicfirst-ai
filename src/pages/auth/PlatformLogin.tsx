@@ -52,16 +52,16 @@ export const PlatformLogin: React.FC<PlatformLoginProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#083B4A] text-white flex flex-col justify-between selection:bg-[#2AAFA3]/30 relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-[#083B4A] text-white flex flex-col justify-between selection:bg-[#0F4C5C]/30 relative overflow-hidden font-sans">
       {/* Background ambient lighting */}
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#0F4C5C]/40 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 -right-40 w-96 h-96 bg-[#2AAFA3]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 -right-40 w-96 h-96 bg-[#0F4C5C]/20 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-40 left-1/3 w-96 h-96 bg-[#0F4C5C]/30 rounded-full blur-3xl pointer-events-none" />
 
       {/* Top Header Bar */}
       <header className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between z-10">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#2AAFA3] to-[#0F4C5C] flex items-center justify-center text-[#083B4A] font-black text-sm shadow-md border border-[#2AAFA3]/40">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0F4C5C] to-[#083B4A] flex items-center justify-center text-white font-black text-sm shadow-md border border-[#0F4C5C]/40">
             CF
           </div>
           <div>
@@ -69,7 +69,7 @@ export const PlatformLogin: React.FC<PlatformLoginProps> = ({
               <span className="font-extrabold text-white tracking-tight text-base sm:text-lg">
                 CLINICFIRST
               </span>
-              <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide bg-[#2AAFA3]/20 text-[#2AAFA3] border border-[#2AAFA3]/40">
+              <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide bg-white/10 text-slate-200 border border-white/20">
                 PLATFORM ROOT
               </span>
             </div>
@@ -82,7 +82,7 @@ export const PlatformLogin: React.FC<PlatformLoginProps> = ({
         {/* Status indicator */}
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="flex items-center gap-1.5 px-3 py-1 bg-white/10 backdrop-blur-xs border border-white/15 rounded-full text-xs text-white shadow-xs">
-            <Shield className="w-3.5 h-3.5 text-[#2AAFA3]" />
+            <Shield className="w-3.5 h-3.5 text-slate-300" />
             <span className="font-semibold text-[11px]">Hardware Enclave Active</span>
           </div>
         </div>
@@ -95,13 +95,13 @@ export const PlatformLogin: React.FC<PlatformLoginProps> = ({
           {/* Left Column: Platform Infrastructure Overview */}
           <div className="hidden lg:flex lg:col-span-6 flex-col justify-center space-y-6 pr-4">
             <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-[#2AAFA3]">
-                <Cpu className="w-3.5 h-3.5 text-[#2AAFA3]" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-slate-200">
+                <Cpu className="w-3.5 h-3.5 text-slate-300" />
                 <span>Global Multi-Tenant Infrastructure</span>
               </div>
               <h1 className="text-3xl xl:text-4xl font-extrabold text-white tracking-tight leading-tight">
                 Master Control Center &<br />
-                <span className="text-[#2AAFA3]">Telephony Node Orchestration.</span>
+                <span className="text-[#0F4C5C]/80">Telephony Node Orchestration.</span>
               </h1>
               <p className="text-sm text-slate-300 leading-relaxed max-w-lg">
                 Manage clinic deployments, inspect real-time SIP trunk streams, monitor speech latency thresholds, and provision enterprise clinical integrations.
@@ -112,7 +112,7 @@ export const PlatformLogin: React.FC<PlatformLoginProps> = ({
             <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-5 shadow-2xl relative overflow-hidden space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-white/10">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#2AAFA3]/20 flex items-center justify-center text-[#2AAFA3]">
+                  <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-slate-200">
                     <Server className="w-4 h-4" />
                   </div>
                   <div>
@@ -133,7 +133,7 @@ export const PlatformLogin: React.FC<PlatformLoginProps> = ({
                   <div className="text-[10px] text-slate-400">Active Clinics</div>
                 </div>
                 <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                  <div className="text-base font-extrabold text-[#2AAFA3] font-mono">1,842</div>
+                  <div className="text-base font-extrabold text-white font-mono">1,842</div>
                   <div className="text-[10px] text-slate-400">Calls Today</div>
                 </div>
                 <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
@@ -144,7 +144,7 @@ export const PlatformLogin: React.FC<PlatformLoginProps> = ({
             </div>
 
             <div className="flex items-center gap-3 text-xs text-slate-400">
-              <KeyRound className="w-4 h-4 text-[#2AAFA3]" />
+              <KeyRound className="w-4 h-4 text-slate-300" />
               <span>Restricted Root Access. All commands and queries are audit-logged for compliance.</span>
             </div>
           </div>

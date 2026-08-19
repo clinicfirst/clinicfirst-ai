@@ -223,21 +223,9 @@ export const ClinicNavbar: React.FC<ClinicNavbarProps> = ({
             )}
           </nav>
 
-          {/* Right: Simulator Call Action + User Profile + Logout + Mobile Menu Button */}
+          {/* Right: User Profile + Logout + Mobile Menu Button */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {clinic && onOpenSimulator && (
-              <Button
-                variant="teal"
-                size="sm"
-                icon={<Phone className="w-3.5 h-3.5" />}
-                onClick={onOpenSimulator}
-                className="hidden sm:inline-flex shrink-0 whitespace-nowrap"
-              >
-                Simulate Call
-              </Button>
-            )}
-
-            <div className="hidden sm:flex flex-col items-end border-l border-[#E2E8F0] pl-3 shrink-0">
+            <div className="hidden sm:flex flex-col items-end pl-2 shrink-0">
               <span className="text-xs font-semibold text-[#172B3A] truncate max-w-[130px]">{user?.name}</span>
               <div className="flex items-center gap-1 mt-0.5">
                 <Badge status={user?.role || 'CLINIC_STAFF'} />
@@ -270,22 +258,6 @@ export const ClinicNavbar: React.FC<ClinicNavbarProps> = ({
       {/* Mobile / Tablet Dropdown Menu */}
       {mobileMenuOpen && (
         <div className="xl:hidden border-t border-[#E2E8F0] px-4 pt-2 pb-3 space-y-1 bg-white max-h-[80vh] overflow-y-auto shadow-lg">
-          {clinic && onOpenSimulator && (
-            <div className="pb-2 sm:hidden">
-              <Button
-                variant="teal"
-                size="sm"
-                className="w-full justify-center"
-                icon={<Phone className="w-3.5 h-3.5" />}
-                onClick={() => {
-                  onOpenSimulator();
-                  setMobileMenuOpen(false);
-                }}
-              >
-                Simulate Inbound Call
-              </Button>
-            </div>
-          )}
 
           <div className="py-1 text-[10px] font-semibold uppercase tracking-wider text-[#94A3B8]">
             Navigation Menu
