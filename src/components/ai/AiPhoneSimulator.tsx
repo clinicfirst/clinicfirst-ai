@@ -54,77 +54,7 @@ export const AiPhoneSimulator: React.FC<AiPhoneSimulatorProps> = ({
   const transcriptEndRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const recognitionRef = useRef<any>(null);
-
-  // Keyboard ESC for modal
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && onClose && isOpen) {
-        onClose();
-      }
-    };
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-      window.addEventListener('keydown', handleKeyDown);
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen, onClose]);
-
-  // Auto-scroll transcript
-  useEffect(() => {
-    transcriptEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [transcript, toolLogs]);
-
-  // Duration timer
-  useEffect(() => {
-    if (callState === 'connected') {
-      timerRef.current = setInterval(() => {
-        setDurationSeconds((prev) => prev + 1);
-      }, 1000);
-    } else {
-      if (timerRef.current) clearInterval(timerRef.current);
-    }
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [callState]);
-
-  // Speech Recognition setup if supported
-  useEffect(() => {
-    const SpeechRecognition =
-      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (SpeechRecognition) {
-      const recognition = new SpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.lang = 'en-US';
-
-      recognition.onresult = (event: any) => {
-        const text = event.results[0][0].transcript;
-        setIsListening(false);
-        if (text) {
-          sendTurn(text);
-        }
-      };
-
-      recognition.onerror = () => {
-        setIsListening(false);
-      };
-
-      recognition.onend = () => {
-        setIsListening(false);
-      };
-
-      recognitionRef.current = recognition;
-    }
-  }, []);
-
-  // Return null if modal mode is active and closed
-  if (isOpen !== undefined && !isOpen) {
-    return null;
-  }
+  const sendTurnRef = useRef<(text: string) => Promise<void>>(async () => {});
 
   const toggleMic = () => {
     if (!recognitionRef.current) {
@@ -261,6 +191,9 @@ export const AiPhoneSimulator: React.FC<AiPhoneSimulatorProps> = ({
     }
   };
 
+  // Keep ref up to date
+  sendTurnRef.current = sendTurn;
+
   const endCall = async () => {
     if (callState === 'connected' && callId) {
       try {
@@ -287,6 +220,72 @@ export const AiPhoneSimulator: React.FC<AiPhoneSimulatorProps> = ({
     const s = secs % 60;
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
+
+  // Keyboard ESC for modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && onClose && isOpen) {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
+  // Auto-scroll transcript
+  useEffect(() => {
+    transcriptEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [transcript, toolLogs]);
+
+  // Duration timer
+  useEffect(() => {
+    if (callState === 'connected') {
+      timerRef.current = setInterval(() => {
+        setDurationSeconds((prev) => prev + 1);
+      }, 1000);
+    } else {
+      if (timerRef.current) clearInterval(timerRef.current);
+    }
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [callState]);
+
+  // Speech Recognition setup if supported
+  useEffect(() => {
+    const SpeechRecognition =
+      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+
+      recognition.onresult = (event: any) => {
+        const text = event.results?.[0]?.[0]?.transcript;
+        setIsListening(false);
+        if (text) {
+          sendTurnRef.current(text);
+        }
+      };
+
+      recognition.onerror = () => {
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+    }
+  }, []);
 
   const content = (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 bg-white w-full">
@@ -611,8 +610,13 @@ export const AiPhoneSimulator: React.FC<AiPhoneSimulatorProps> = ({
     </div>
   );
 
-  // If in modal mode, wrap in modal dialog
-  if (isOpen !== undefined) {
+  // If in modal mode and closed, do not render
+  if (isOpen === false) {
+    return null;
+  }
+
+  // If in modal mode and open, wrap in modal dialog
+  if (isOpen === true) {
     return (
       <div className="fixed inset-0 z-50 overflow-y-auto">
         <div
@@ -647,7 +651,7 @@ export const AiPhoneSimulator: React.FC<AiPhoneSimulatorProps> = ({
     );
   }
 
-  // Embed mode
+  // Embed mode (isOpen is undefined)
   return content;
 };
 

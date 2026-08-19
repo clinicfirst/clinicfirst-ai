@@ -86,7 +86,7 @@ class DatabaseEngine {
     }
   }
 
-  private ensureSeedUsers(dbData: DatabaseSchema): DatabaseSchema {
+  private ensureSeedUsers(dbData: DatabaseSchema) {
     const now = new Date().toISOString();
     const demoAccounts: (User & { password_hash: string })[] = [
       {
@@ -96,7 +96,7 @@ class DatabaseEngine {
         name: 'System Owner',
         email: 'admin@clinicfirst.internal',
         phone: '+1-555-010-0001',
-        status: 'ACTIVE',
+        status: "ACTIVE" as const,
         must_change_password: false,
         created_at: now,
         password_hash: hashPassword('AdminPassword123!'),
@@ -108,7 +108,7 @@ class DatabaseEngine {
         name: 'Platform Administrator',
         email: 'admin@clinicfirst.ai',
         phone: '+1-555-010-0002',
-        status: 'ACTIVE',
+        status: "ACTIVE" as const,
         must_change_password: false,
         created_at: now,
         password_hash: hashPassword('PlatformAdmin2026!'),
@@ -120,7 +120,7 @@ class DatabaseEngine {
         name: 'Dr. Arthur Pendelton',
         email: 'admin@apexcardiology.com',
         phone: '+1-555-019-2001',
-        status: 'ACTIVE',
+        status: "ACTIVE" as const,
         must_change_password: false,
         created_at: now,
         password_hash: hashPassword('ApexAdmin2026!'),
@@ -132,7 +132,7 @@ class DatabaseEngine {
         name: 'Dr. Arthur Pendelton',
         email: 'admin@apexclinic.com',
         phone: '+1-555-019-2001',
-        status: 'ACTIVE',
+        status: "ACTIVE" as const,
         must_change_password: false,
         created_at: now,
         password_hash: hashPassword('ApexClinic2026!'),
@@ -144,7 +144,7 @@ class DatabaseEngine {
         name: 'Sarah Jenkins',
         email: 'reception@apexcardiology.com',
         phone: '+1-555-019-2002',
-        status: 'ACTIVE',
+        status: "ACTIVE" as const,
         must_change_password: false,
         created_at: now,
         password_hash: hashPassword('ApexStaff2026!'),
@@ -156,7 +156,7 @@ class DatabaseEngine {
         name: 'Sarah Jenkins',
         email: 'sarah.reception@apexclinic.com',
         phone: '+1-555-019-2002',
-        status: 'ACTIVE',
+        status: "ACTIVE" as const,
         must_change_password: false,
         created_at: now,
         password_hash: hashPassword('StaffPass123!'),
@@ -195,7 +195,7 @@ class DatabaseEngine {
           ...dbData.users[idxByEmail],
           id: acc.id,
           password_hash: acc.password_hash,
-          status: 'ACTIVE',
+          status: "ACTIVE" as const,
           clinic_id: acc.clinic_id,
           role: acc.role,
         };
@@ -204,7 +204,7 @@ class DatabaseEngine {
           ...dbData.users[idxById],
           email: acc.email,
           password_hash: acc.password_hash,
-          status: 'ACTIVE',
+          status: "ACTIVE" as const,
           clinic_id: acc.clinic_id,
           role: acc.role,
         };
@@ -241,15 +241,15 @@ class DatabaseEngine {
     return dbData;
   }
 
-  private getDefaultPlatformAiConfig(): PlatformAiConfig & { internal_api_key?: string } {
+  private getDefaultPlatformAiConfig() {
     return {
       id: 'platform_ai_default',
-      provider: 'gemini',
+      provider: "gemini" as const,
       model: 'gemini-2.5-flash',
-      voice_provider: 'gemini_live',
+      voice_provider: "gemini_live" as const,
       voice_name: 'Zephyr',
       temperature: 0.2,
-      status: 'ACTIVE',
+      status: "ACTIVE" as const,
       api_key_configured: Boolean(process.env.GEMINI_API_KEY),
       api_key_masked: process.env.GEMINI_API_KEY
         ? `AIzaSy••••••••••••••••••••${process.env.GEMINI_API_KEY.slice(-4)}`
@@ -344,7 +344,7 @@ class DatabaseEngine {
     ];
   }
 
-  private loadDatabase(): DatabaseSchema {
+  private loadDatabase() {
     if (IS_VERCEL && !fs.existsSync(DB_FILE) && fs.existsSync(SOURCE_DB_FILE)) {
       try {
         this.ensureDirectory();
@@ -395,7 +395,7 @@ class DatabaseEngine {
     this.saveDatabase();
   }
 
-  private generateSeedData(): DatabaseSchema {
+  private generateSeedData() {
     const now = new Date().toISOString();
     const today = new Date().toISOString().split('T')[0];
 
@@ -406,7 +406,7 @@ class DatabaseEngine {
       name: 'System Owner',
       email: 'admin@clinicfirst.internal',
       phone: '+1-555-010-0001',
-      status: 'ACTIVE',
+      status: "ACTIVE" as const,
       must_change_password: false,
       created_at: now,
       password_hash: hashPassword('AdminPassword123!'),
@@ -423,7 +423,7 @@ class DatabaseEngine {
       timezone: 'America/Los_Angeles',
       currency: 'USD',
       currency_symbol: '$',
-      status: 'ACTIVE',
+      status: "ACTIVE" as const,
       created_at: now,
       operating_hours: {
         monday: { open: '08:30', close: '17:30', closed: false },
@@ -443,7 +443,7 @@ class DatabaseEngine {
       name: 'Dr. Arthur Pendelton',
       email: 'admin@apexclinic.com',
       phone: '+1-555-019-2001',
-      status: 'ACTIVE',
+      status: "ACTIVE" as const,
       must_change_password: false,
       created_at: now,
       password_hash: hashPassword('ApexClinic2026!'),
@@ -456,7 +456,7 @@ class DatabaseEngine {
       name: 'Sarah Jenkins',
       email: 'sarah.reception@apexclinic.com',
       phone: '+1-555-019-2002',
-      status: 'ACTIVE',
+      status: "ACTIVE" as const,
       must_change_password: false,
       created_at: now,
       password_hash: hashPassword('StaffPass123!'),
@@ -472,7 +472,7 @@ class DatabaseEngine {
         phone: '+1-555-019-2101',
         email: 'elena.vance@apexclinic.com',
         consultation_duration_minutes: 30,
-        status: 'ACTIVE',
+        status: "ACTIVE" as const,
         created_at: now,
       },
       {
@@ -484,7 +484,7 @@ class DatabaseEngine {
         phone: '+1-555-019-2102',
         email: 'marcus.chen@apexclinic.com',
         consultation_duration_minutes: 20,
-        status: 'ACTIVE',
+        status: "ACTIVE" as const,
         created_at: now,
       },
       {
@@ -496,7 +496,7 @@ class DatabaseEngine {
         phone: '+1-555-019-2103',
         email: 'priya.sharma@apexclinic.com',
         consultation_duration_minutes: 30,
-        status: 'ACTIVE',
+        status: "ACTIVE" as const,
         created_at: now,
       },
     ];
@@ -526,7 +526,7 @@ class DatabaseEngine {
         name: 'Comprehensive Cardiac Evaluation',
         duration_minutes: 30,
         fee: 160,
-        status: 'ACTIVE',
+        status: "ACTIVE" as const,
         assigned_doctor_ids: ['doc_elena_1'],
       },
       {
@@ -535,7 +535,7 @@ class DatabaseEngine {
         name: 'General Health Consultation',
         duration_minutes: 20,
         fee: 85,
-        status: 'ACTIVE',
+        status: "ACTIVE" as const,
         assigned_doctor_ids: ['doc_marcus_2', 'doc_elena_1'],
       },
       {
@@ -544,7 +544,7 @@ class DatabaseEngine {
         name: 'ECG & Vital Signs Diagnostic',
         duration_minutes: 20,
         fee: 110,
-        status: 'ACTIVE',
+        status: "ACTIVE" as const,
         assigned_doctor_ids: ['doc_elena_1', 'doc_marcus_2'],
       },
       {
@@ -553,7 +553,7 @@ class DatabaseEngine {
         name: 'Pediatric Wellness Checkup',
         duration_minutes: 30,
         fee: 95,
-        status: 'ACTIVE',
+        status: "ACTIVE" as const,
         assigned_doctor_ids: ['doc_priya_3'],
       },
     ];
@@ -642,13 +642,13 @@ class DatabaseEngine {
       clinic_id: 'clinic_apex_101',
       name: 'Ava',
       greeting: 'Thank you for calling Apex Cardiology & Family Medicine. My name is Ava, the clinic AI receptionist. How may I assist you with booking, rescheduling, or clinic information today?',
-      voice_provider: 'gemini_live',
+      voice_provider: "gemini_live" as const,
       voice_config: {
         voice_name: 'Zephyr',
         temperature: 0.2,
       },
       languages: ['English', 'Spanish'],
-      status: 'ACTIVE',
+      status: "ACTIVE" as const,
       escalation_contact: {
         name: 'Urgent Care & Reception Triage',
         phone: '+1-555-019-2099',
@@ -727,21 +727,21 @@ class DatabaseEngine {
 
   // --- CRUD & Queries with Strict Tenant Isolation ---
 
-  public getClinics(): Clinic[] {
+  public getClinics() {
     return this.data.clinics;
   }
 
-  public getClinicById(id: string): Clinic | undefined {
+  public getClinicById(id: string) {
     return this.data.clinics.find((c) => c.id === id);
   }
 
-  public createClinic(clinic: Clinic): Clinic {
+  public createClinic(clinic: Clinic) {
     this.data.clinics.push(clinic);
     this.flush();
     return clinic;
   }
 
-  public updateClinic(id: string, updates: Partial<Clinic>): Clinic | null {
+  public updateClinic(id: string, updates: Partial<Clinic>) {
     const idx = this.data.clinics.findIndex((c) => c.id === id);
     if (idx === -1) return null;
     this.data.clinics[idx] = { ...this.data.clinics[idx], ...updates };
@@ -750,29 +750,29 @@ class DatabaseEngine {
   }
 
   // Users
-  public getUsers(clinic_id?: string | null): User[] {
+  public getUsers(clinic_id?: string | null) {
     const list = clinic_id === undefined
       ? this.data.users
       : this.data.users.filter((u) => u.clinic_id === clinic_id);
     return list.map(({ password_hash, ...rest }) => rest);
   }
 
-  public getUserById(id: string): (User & { password_hash: string }) | undefined {
+  public getUserById(id: string) {
     return this.data.users.find((u) => u.id === id);
   }
 
-  public getUserByEmail(email: string): (User & { password_hash: string }) | undefined {
+  public getUserByEmail(email: string) {
     return this.data.users.find((u) => u.email.toLowerCase() === email.toLowerCase());
   }
 
-  public createUser(user: User & { password_hash: string }): User {
+  public createUser(user: User & { password_hash: string }) {
     this.data.users.push(user);
     this.flush();
     const { password_hash, ...clean } = user;
     return clean;
   }
 
-  public updateUser(id: string, updates: Partial<User & { password_hash?: string }>): User | null {
+  public updateUser(id: string, updates: Partial<User & { password_hash?: string }>) {
     const idx = this.data.users.findIndex((u) => u.id === id);
     if (idx === -1) return null;
     this.data.users[idx] = { ...this.data.users[idx], ...updates };
@@ -782,21 +782,21 @@ class DatabaseEngine {
   }
 
   // Doctors
-  public getDoctors(clinic_id: string): Doctor[] {
+  public getDoctors(clinic_id: string) {
     return this.data.doctors.filter((d) => d.clinic_id === clinic_id);
   }
 
-  public getDoctorById(clinic_id: string, id: string): Doctor | undefined {
+  public getDoctorById(clinic_id: string, id: string) {
     return this.data.doctors.find((d) => d.clinic_id === clinic_id && d.id === id);
   }
 
-  public createDoctor(doctor: Doctor): Doctor {
+  public createDoctor(doctor: Doctor) {
     this.data.doctors.push(doctor);
     this.flush();
     return doctor;
   }
 
-  public updateDoctor(clinic_id: string, id: string, updates: Partial<Doctor>): Doctor | null {
+  public updateDoctor(clinic_id: string, id: string, updates: Partial<Doctor>) {
     const idx = this.data.doctors.findIndex((d) => d.clinic_id === clinic_id && d.id === id);
     if (idx === -1) return null;
     this.data.doctors[idx] = { ...this.data.doctors[idx], ...updates };
@@ -805,13 +805,13 @@ class DatabaseEngine {
   }
 
   // Schedules
-  public getSchedules(clinic_id: string, doctor_id?: string): DoctorSchedule[] {
+  public getSchedules(clinic_id: string, doctor_id?: string) {
     return this.data.doctor_schedules.filter(
       (s) => s.clinic_id === clinic_id && (!doctor_id || s.doctor_id === doctor_id)
     );
   }
 
-  public saveSchedule(schedule: DoctorSchedule): DoctorSchedule {
+  public saveSchedule(schedule: DoctorSchedule) {
     const idx = this.data.doctor_schedules.findIndex(
       (s) => s.clinic_id === schedule.clinic_id && s.doctor_id === schedule.doctor_id && s.day_of_week === schedule.day_of_week
     );
@@ -824,7 +824,7 @@ class DatabaseEngine {
     return schedule;
   }
 
-  public deleteSchedule(clinic_id: string, doctor_id: string, day_of_week: number): boolean {
+  public deleteSchedule(clinic_id: string, doctor_id: string, day_of_week: number) {
     const initialLen = this.data.doctor_schedules.length;
     this.data.doctor_schedules = this.data.doctor_schedules.filter(
       (s) => !(s.clinic_id === clinic_id && s.doctor_id === doctor_id && s.day_of_week === day_of_week)
@@ -834,19 +834,19 @@ class DatabaseEngine {
   }
 
   // Leaves
-  public getLeaves(clinic_id: string, doctor_id?: string): DoctorLeave[] {
+  public getLeaves(clinic_id: string, doctor_id?: string) {
     return this.data.doctor_leaves.filter(
       (l) => l.clinic_id === clinic_id && (!doctor_id || l.doctor_id === doctor_id)
     );
   }
 
-  public createLeave(leave: DoctorLeave): DoctorLeave {
+  public createLeave(leave: DoctorLeave) {
     this.data.doctor_leaves.push(leave);
     this.flush();
     return leave;
   }
 
-  public deleteLeave(clinic_id: string, id: string): boolean {
+  public deleteLeave(clinic_id: string, id: string) {
     const initialLen = this.data.doctor_leaves.length;
     this.data.doctor_leaves = this.data.doctor_leaves.filter((l) => !(l.clinic_id === clinic_id && l.id === id));
     this.flush();
@@ -854,21 +854,21 @@ class DatabaseEngine {
   }
 
   // Services
-  public getServices(clinic_id: string): Service[] {
+  public getServices(clinic_id: string) {
     return this.data.services.filter((s) => s.clinic_id === clinic_id);
   }
 
-  public getServiceById(clinic_id: string, id: string): Service | undefined {
+  public getServiceById(clinic_id: string, id: string) {
     return this.data.services.find((s) => s.clinic_id === clinic_id && s.id === id);
   }
 
-  public createService(service: Service): Service {
+  public createService(service: Service) {
     this.data.services.push(service);
     this.flush();
     return service;
   }
 
-  public updateService(clinic_id: string, id: string, updates: Partial<Service>): Service | null {
+  public updateService(clinic_id: string, id: string, updates: Partial<Service>) {
     const idx = this.data.services.findIndex((s) => s.clinic_id === clinic_id && s.id === id);
     if (idx === -1) return null;
     this.data.services[idx] = { ...this.data.services[idx], ...updates };
@@ -877,7 +877,7 @@ class DatabaseEngine {
   }
 
   // Patients
-  public getPatients(clinic_id: string, search?: string): Patient[] {
+  public getPatients(clinic_id: string, search?: string) {
     let list = this.data.patients.filter((p) => p.clinic_id === clinic_id);
     if (search) {
       const q = search.toLowerCase().trim();
@@ -891,24 +891,24 @@ class DatabaseEngine {
     return list;
   }
 
-  public getPatientById(clinic_id: string, id: string): Patient | undefined {
+  public getPatientById(clinic_id: string, id: string) {
     return this.data.patients.find((p) => p.clinic_id === clinic_id && p.id === id);
   }
 
-  public getPatientByPhone(clinic_id: string, phone: string): Patient | undefined {
+  public getPatientByPhone(clinic_id: string, phone: string) {
     const normalized = phone.replace(/\D/g, '');
     return this.data.patients.find(
       (p) => p.clinic_id === clinic_id && p.phone.replace(/\D/g, '') === normalized
     );
   }
 
-  public createPatient(patient: Patient): Patient {
+  public createPatient(patient: Patient) {
     this.data.patients.push(patient);
     this.flush();
     return patient;
   }
 
-  public updatePatient(clinic_id: string, id: string, updates: Partial<Patient>): Patient | null {
+  public updatePatient(clinic_id: string, id: string, updates: Partial<Patient>) {
     const idx = this.data.patients.findIndex((p) => p.clinic_id === clinic_id && p.id === id);
     if (idx === -1) return null;
     this.data.patients[idx] = { ...this.data.patients[idx], ...updates };
@@ -917,7 +917,7 @@ class DatabaseEngine {
   }
 
   // Appointments (Strict double-booking prevention)
-  public getAppointments(clinic_id: string, filters?: { date?: string; doctor_id?: string; status?: string }): Appointment[] {
+  public getAppointments(clinic_id: string, filters?: { date?: string; doctor_id?: string; status?: string }) {
     let list = this.data.appointments.filter((a) => a.clinic_id === clinic_id);
     if (filters?.date) {
       list = list.filter((a) => a.date === filters.date);
@@ -938,7 +938,7 @@ class DatabaseEngine {
     }));
   }
 
-  public getAppointmentById(clinic_id: string, id: string): Appointment | undefined {
+  public getAppointmentById(clinic_id: string, id: string) {
     const apt = this.data.appointments.find((a) => a.clinic_id === clinic_id && a.id === id);
     if (!apt) return undefined;
     return {
@@ -955,7 +955,7 @@ class DatabaseEngine {
     date: string,
     start_time: string,
     exclude_appointment_id?: string
-  ): boolean {
+  ) {
     return this.data.appointments.some(
       (a) =>
         a.clinic_id === clinic_id &&
@@ -1068,11 +1068,11 @@ class DatabaseEngine {
   }
 
   // AI Agent
-  public getAiAgent(clinic_id: string): AiAgent | undefined {
+  public getAiAgent(clinic_id: string) {
     return this.data.ai_agents.find((a) => a.clinic_id === clinic_id);
   }
 
-  public saveAiAgent(agent: AiAgent): AiAgent {
+  public saveAiAgent(agent: AiAgent) {
     const idx = this.data.ai_agents.findIndex((a) => a.clinic_id === agent.clinic_id);
     if (idx >= 0) {
       this.data.ai_agents[idx] = agent;
@@ -1084,7 +1084,7 @@ class DatabaseEngine {
   }
 
   // Calls
-  public getCalls(clinic_id: string): Call[] {
+  public getCalls(clinic_id: string) {
     return this.data.calls
       .filter((c) => c.clinic_id === clinic_id)
       .map((call) => ({
@@ -1096,13 +1096,13 @@ class DatabaseEngine {
       .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   }
 
-  public createCall(call: Call): Call {
+  public createCall(call: Call) {
     this.data.calls.push(call);
     this.flush();
     return call;
   }
 
-  public updateCall(clinic_id: string, id: string, updates: Partial<Call>): Call | null {
+  public updateCall(clinic_id: string, id: string, updates: Partial<Call>) {
     const idx = this.data.calls.findIndex((c) => c.clinic_id === clinic_id && c.id === id);
     if (idx === -1) return null;
     this.data.calls[idx] = { ...this.data.calls[idx], ...updates };
@@ -1111,19 +1111,19 @@ class DatabaseEngine {
   }
 
   // Escalations
-  public getEscalations(clinic_id: string): Escalation[] {
+  public getEscalations(clinic_id: string) {
     return this.data.escalations
       .filter((e) => e.clinic_id === clinic_id)
       .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   }
 
-  public createEscalation(escalation: Escalation): Escalation {
+  public createEscalation(escalation: Escalation) {
     this.data.escalations.push(escalation);
     this.flush();
     return escalation;
   }
 
-  public resolveEscalation(clinic_id: string, id: string, resolvedBy: string): Escalation | null {
+  public resolveEscalation(clinic_id: string, id: string, resolvedBy: string) {
     const idx = this.data.escalations.findIndex((e) => e.clinic_id === clinic_id && e.id === id);
     if (idx === -1) return null;
     this.data.escalations[idx].status = 'resolved';
@@ -1134,7 +1134,7 @@ class DatabaseEngine {
   }
 
   // Audit Logs
-  public logAudit(log: Omit<AuditLog, 'id' | 'created_at'>): AuditLog {
+  public logAudit(log: Omit<AuditLog, 'id' | 'created_at'>) {
     const entry: AuditLog = {
       ...log,
       id: `audit_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
@@ -1145,7 +1145,7 @@ class DatabaseEngine {
     return entry;
   }
 
-  public getAuditLogs(clinic_id?: string | null): AuditLog[] {
+  public getAuditLogs(clinic_id?: string | null) {
     const logs = clinic_id === undefined
       ? this.data.audit_logs
       : this.data.audit_logs.filter((l) => l.clinic_id === clinic_id);
@@ -1153,7 +1153,7 @@ class DatabaseEngine {
   }
 
   // Platform AI Configuration
-  public getPlatformAiConfig(): PlatformAiConfig {
+  public getPlatformAiConfig() {
     if (!this.data.platform_ai_config) {
       this.data.platform_ai_config = this.getDefaultPlatformAiConfig();
       this.flush();
@@ -1172,13 +1172,13 @@ class DatabaseEngine {
     };
   }
 
-  public getRawPlatformAiApiKey(): string | undefined {
+  public getRawPlatformAiApiKey() {
     return this.data.platform_ai_config?.internal_api_key || process.env.GEMINI_API_KEY;
   }
 
   public updatePlatformAiConfig(
     updates: Partial<PlatformAiConfig> & { new_api_key?: string; remove_api_key?: boolean }
-  ): PlatformAiConfig {
+  ) {
     if (!this.data.platform_ai_config) {
       this.data.platform_ai_config = this.getDefaultPlatformAiConfig();
     }
@@ -1205,7 +1205,7 @@ class DatabaseEngine {
   }
 
   // Platform Knowledge Base
-  public getPlatformKnowledgeBase(activeOnly?: boolean): PlatformKnowledgeItem[] {
+  public getPlatformKnowledgeBase(activeOnly?: boolean) {
     if (!this.data.platform_knowledge_base) {
       this.data.platform_knowledge_base = this.getDefaultKnowledgeBase();
       this.flush();
@@ -1217,11 +1217,11 @@ class DatabaseEngine {
     return items.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
   }
 
-  public getKnowledgeItemById(id: string): PlatformKnowledgeItem | undefined {
+  public getKnowledgeItemById(id: string) {
     return this.data.platform_knowledge_base?.find((k) => k.id === id);
   }
 
-  public createKnowledgeItem(item: Omit<PlatformKnowledgeItem, 'id' | 'created_at' | 'updated_at'>): PlatformKnowledgeItem {
+  public createKnowledgeItem(item: Omit<PlatformKnowledgeItem, 'id' | 'created_at' | 'updated_at'>) {
     if (!this.data.platform_knowledge_base) {
       this.data.platform_knowledge_base = [];
     }
@@ -1237,7 +1237,7 @@ class DatabaseEngine {
     return newItem;
   }
 
-  public updateKnowledgeItem(id: string, updates: Partial<PlatformKnowledgeItem>): PlatformKnowledgeItem | null {
+  public updateKnowledgeItem(id: string, updates: Partial<PlatformKnowledgeItem>) {
     if (!this.data.platform_knowledge_base) return null;
     const idx = this.data.platform_knowledge_base.findIndex((k) => k.id === id);
     if (idx === -1) return null;
@@ -1251,7 +1251,7 @@ class DatabaseEngine {
     return this.data.platform_knowledge_base[idx];
   }
 
-  public deleteKnowledgeItem(id: string): boolean {
+  public deleteKnowledgeItem(id: string) {
     if (!this.data.platform_knowledge_base) return false;
     const initialLen = this.data.platform_knowledge_base.length;
     this.data.platform_knowledge_base = this.data.platform_knowledge_base.filter((k) => k.id !== id);
