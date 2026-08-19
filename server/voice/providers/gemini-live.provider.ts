@@ -136,9 +136,29 @@ export class GeminiLiveVoiceProvider implements IVoiceProvider {
 
       const replyText = response.text || 'I understand. How else can I assist you with your appointment today?';
 
+      let audioBase64: string | undefined = undefined;
+      try {
+        const ttsResponse = await ai.models.generateContent({
+          model: 'gemini-3.1-flash-tts-preview',
+          contents: [{ parts: [{ text: replyText }] }],
+          config: {
+            responseModalities: ['AUDIO' as any],
+            speechConfig: {
+              voiceConfig: {
+                prebuiltVoiceConfig: { voiceName: 'Kore' },
+              },
+            },
+          },
+        });
+        audioBase64 = ttsResponse.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+      } catch (ttsErr: any) {
+        console.warn('TTS Generation failed:', ttsErr?.message);
+      }
+
       return {
         replyText,
         toolCallsExecuted,
+        audioBase64,
       };
     } catch (err: any) {
       console.warn('Gemini API call failed, using intelligent fallback simulation:', err?.message);

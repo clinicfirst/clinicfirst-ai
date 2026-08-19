@@ -74,6 +74,49 @@ export const AiPhoneSimulator: React.FC<AiPhoneSimulatorProps> = ({
     }
   };
 
+  const audioCtxRef = useRef<AudioContext | null>(null);
+
+  const getAudioContext = () => {
+    if (!audioCtxRef.current) {
+      audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
+    }
+    if (audioCtxRef.current.state === 'suspended') {
+      audioCtxRef.current.resume();
+    }
+    return audioCtxRef.current;
+  };
+
+  const playAudio = async (base64String: string) => {
+    try {
+      const audioCtx = getAudioContext();
+      const binaryString = window.atob(base64String);
+      const len = binaryString.length;
+      
+      // Since it's 16-bit PCM (little-endian), 2 bytes per sample.
+      const buffer = new Int16Array(len / 2);
+      const dataView = new DataView(buffer.buffer);
+      for (let i = 0; i < len; i++) {
+        dataView.setUint8(i, binaryString.charCodeAt(i));
+      }
+      
+      // Convert to Float32Array (-1.0 to 1.0)
+      const float32Array = new Float32Array(buffer.length);
+      for (let i = 0; i < buffer.length; i++) {
+        float32Array[i] = buffer[i] / 32768.0;
+      }
+
+      const audioBuffer = audioCtx.createBuffer(1, float32Array.length, 24000);
+      audioBuffer.copyToChannel(float32Array, 0);
+
+      const source = audioCtx.createBufferSource();
+      source.buffer = audioBuffer;
+      source.connect(audioCtx.destination);
+      source.start(0);
+    } catch (e) {
+      console.error("Audio playback error", e);
+    }
+  };
+
   const startCall = async () => {
     try {
       setCallState('dialing');
@@ -88,6 +131,7 @@ export const AiPhoneSimulator: React.FC<AiPhoneSimulatorProps> = ({
         greeting: string;
         agentName: string;
         patient?: { id: string; name: string };
+        audioBase64?: string;
       }>('/api/ai/call/start', {
         method: 'POST',
         body: JSON.stringify({
@@ -108,6 +152,10 @@ export const AiPhoneSimulator: React.FC<AiPhoneSimulatorProps> = ({
           timestamp: '00:00',
         },
       ]);
+      
+      if (res.audioBase64) {
+        playAudio(res.audioBase64);
+      }
     } catch (err: any) {
       console.error('Call initiation error:', err);
       setCallState('idle');
@@ -136,6 +184,7 @@ export const AiPhoneSimulator: React.FC<AiPhoneSimulatorProps> = ({
       const res = await apiRequest<{
         replyText: string;
         toolCallsExecuted: Array<{ name: string; args: any; result: any }>;
+        audioBase64?: string;
       }>('/api/ai/call/message', {
         method: 'POST',
         body: JSON.stringify({
@@ -162,6 +211,10 @@ export const AiPhoneSimulator: React.FC<AiPhoneSimulatorProps> = ({
             setCallOutcome('ESCALATED');
           }
         }
+      }
+
+      if (res.audioBase64) {
+        playAudio(res.audioBase64);
       }
 
       const replyTimeStr = `${Math.floor((durationSeconds + 2) / 60)

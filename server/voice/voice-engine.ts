@@ -180,12 +180,37 @@ class VoiceEngineManager {
       created_at: new Date().toISOString(),
     });
 
+    let audioBase64: string | undefined = undefined;
+    try {
+      const apiKey = db.getRawPlatformAiApiKey();
+      if (apiKey) {
+        const { GoogleGenAI } = require('@google/genai');
+        const ai = new GoogleGenAI({ apiKey });
+        const ttsResponse = await ai.models.generateContent({
+          model: 'gemini-3.1-flash-tts-preview',
+          contents: [{ parts: [{ text: agent.greeting }] }],
+          config: {
+            responseModalities: ['AUDIO'],
+            speechConfig: {
+              voiceConfig: {
+                prebuiltVoiceConfig: { voiceName: 'Kore' },
+              },
+            },
+          },
+        });
+        audioBase64 = ttsResponse.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+      }
+    } catch (ttsErr: any) {
+      console.warn('Greeting TTS Generation failed:', ttsErr?.message);
+    }
+
     return {
       sessionId,
       callId: callRecord.id,
       greeting: agent.greeting,
       agentName: agent.name,
       voiceProvider: agent.voice_provider,
+      audioBase64,
       patient: patient
         ? {
             id: patient.id,
