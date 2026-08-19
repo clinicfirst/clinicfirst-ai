@@ -1,4 +1,7 @@
-import app from '../server/app';
+import serverBundle from '../dist/server.cjs';
+
+// Extract the Express app instance from the CJS bundle
+const app = serverBundle.default || serverBundle;
 
 export default function handler(req: any, res: any) {
   const originalUrl = req.headers['x-matched-path'] || req.headers['x-forwarded-uri'] || req.headers['x-invoke-path'] || req.originalUrl;
