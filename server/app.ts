@@ -25,13 +25,25 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Serverless / Vercel URL normalization middleware
 app.use((req, res, next) => {
-  // If Vercel rewrote /api/... to /api or /
+  // If Vercel rewrote /api/... to /api or /api/index.js
   const forwardedPath =
     (req.headers['x-matched-path'] as string) ||
     (req.headers['x-forwarded-uri'] as string) ||
-    (req.headers['x-invoke-path'] as string);
+    (req.headers['x-invoke-path'] as string) ||
+    req.originalUrl;
 
-  if (forwardedPath && forwardedPath.startsWith('/api') && (req.url === '/' || req.url === '/api' || req.url === '')) {
+  if (
+    forwardedPath &&
+    typeof forwardedPath === 'string' &&
+    forwardedPath.startsWith('/api') &&
+    (req.url === '/' ||
+      req.url === '/api' ||
+      req.url === '/api/' ||
+      req.url === '/api/index' ||
+      req.url === '/api/index.js' ||
+      req.url.includes('[...all]') ||
+      req.url.includes('[...path]'))
+  ) {
     req.url = forwardedPath;
   }
   next();
